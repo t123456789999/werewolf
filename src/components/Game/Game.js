@@ -1143,9 +1143,8 @@ const Game = (props) => {
   }
 
   const getWolfs = () => {
-    //list.filter(role => role.role.key === WOLF.key)
     let wolfsInfo = '';
-    const wolfs = list.filter(role => role.role.key === WOLF.key);
+    const wolfs = list.filter(role => role.role.key === WOLF.key || role.role.key === WOLF_KING.key);
     wolfs.forEach((tmp, index) => {
       wolfsInfo += tmp.index;
       if (wolfs.length - 1 !== index) {
@@ -1153,6 +1152,11 @@ const Game = (props) => {
       }
     });
     return wolfsInfo;
+  };
+
+  const getWolfKing = () => {
+    const wolfKing = list.find(role => role.role.key === WOLF_KING.key);
+    return wolfKing ? wolfKing.index : null;
   };
 
   const getVillages = () => {
@@ -1716,6 +1720,26 @@ const Game = (props) => {
                   <div>
                     <strong>{t('all_players')}</strong>
                     <ul>
+                      { /* 狼人陣營 */ }
+                      <li key="wolf_group_mirror">
+                        <strong>{t('wolf')}:</strong> {getWolfs()}
+                      </li>
+                      
+                      { /* 神職陣營 (分別列出) */ }
+                      { (isUsePredictor) && <li key="pred_group_mirror"><strong>{t('predictor')}:</strong> {list.find(r => r.role.key === PREDICTOR.key).index}</li> }
+                      { (isUseWitch) && <li key="witch_group_mirror"><strong>{t('witch')}:</strong> {list.find(r => r.role.key === WITCH.key).index}</li> }
+                      { (isUseHunter) && <li key="hunt_group_mirror"><strong>{t('hunter')}:</strong> {list.find(r => r.role.key === HUNTER.key).index}</li> }
+                      { (isUseKnight) && <li key="knig_group_mirror"><strong>{t('knight')}:</strong> {list.find(r => r.role.key === KNIGHT.key).index}</li> }
+                      { (isUseidiot) && <li key="idio_group_mirror"><strong>{t('idiot')}:</strong> {list.find(r => r.role.key === idiot.key).index}</li> }
+                      { (isUseGuard) && <li key="guar_group_mirror"><strong>{t('guard')}:</strong> {list.find(r => r.role.key === GUARD.key).index}</li> }
+
+                      { /* 村民陣營 */ }
+                      <li key="villager_group_mirror">
+                        <strong>{t('villager')}:</strong> {getVillages()}
+                      </li>
+                      
+                      <Divider style={{ margin: '10px 0' }} />
+                      <strong>{t('all_players')}</strong>
                       {
                         list.sort((a,b) => a.index - b.index).map((player) => (
                           <li key={player.index}>
@@ -1746,6 +1770,26 @@ const Game = (props) => {
               <div>
                 <strong>{t('all_players')}</strong>
                 <ul>
+                  { /* 狼人陣營 */ }
+                  <li key="wolf_group">
+                    <strong>{t('wolf')}:</strong> {getWolfs()}
+                  </li>
+                  
+                  { /* 神職陣營 (分別列出) */ }
+                  { (isUsePredictor) && <li key="pred_group"><strong>{t('predictor')}:</strong> {list.find(r => r.role.key === PREDICTOR.key).index}</li> }
+                  { (isUseWitch) && <li key="witch_group"><strong>{t('witch')}:</strong> {list.find(r => r.role.key === WITCH.key).index}</li> }
+                  { (isUseHunter) && <li key="hunt_group"><strong>{t('hunter')}:</strong> {list.find(r => r.role.key === HUNTER.key).index}</li> }
+                  { (isUseKnight) && <li key="knig_group"><strong>{t('knight')}:</strong> {list.find(r => r.role.key === KNIGHT.key).index}</li> }
+                  { (isUseidiot) && <li key="idio_group"><strong>{t('idiot')}:</strong> {list.find(r => r.role.key === idiot.key).index}</li> }
+                  { (isUseGuard) && <li key="guar_group"><strong>{t('guard')}:</strong> {list.find(r => r.role.key === GUARD.key).index}</li> }
+
+                  { /* 村民陣營 */ }
+                  <li key="villager_group">
+                    <strong>{t('villager')}:</strong> {getVillages()}
+                  </li>
+                  
+                  <Divider style={{ margin: '10px 0' }} />
+                  <strong>{t('all_players')}</strong>
                   {
                     list.sort((a,b) => a.index - b.index).map((player) => (
                       <li key={player.index}>
