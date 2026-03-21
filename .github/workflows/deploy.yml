@@ -16,6 +16,7 @@ jobs:
       - name: Install and Build 🔧
         env:
           NODE_OPTIONS: --openssl-legacy-provider
+          SKIP_PREFLIGHT_CHECK: true
         run: |
           npm install
           npm run build
