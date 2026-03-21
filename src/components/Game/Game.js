@@ -982,13 +982,6 @@ const Game = (props) => {
         }
       });
 
-      if (IS_DEBUG) {
-        console.log('godsCount', godsCount);
-        console.log('villagersCount', villagersCount);
-        console.log('deadGods', deadGods);
-        console.log('deadVillagers', deadVillagers);
-      }
-
       // 屠邊成功：神職全滅 或 民眾全滅
       if ((godsCount > 0 && deadGods === godsCount) || (villagersCount > 0 && deadVillagers === villagersCount)) {
         return {
@@ -1039,6 +1032,8 @@ const Game = (props) => {
       if (isWolfKing) {
         setIsOpenWolfKingShoot(true);
       } else {
+        // 如果沒有狼王要開槍，但 checkGameFinished 說遊戲該結束了（例如獵人開槍打死最後一狼）
+        // 這種情況下 result.isFinished 會是 true, 上面已經處理了
         if (dayType === DAY_TYPE.DAY) {
           initSelect(true);
         } else {
@@ -1718,28 +1713,18 @@ const Game = (props) => {
                   { 
                     <span className={classes.good}>{gameResultMessage}</span>
                   }
-                  <ul>
-                    <li>{`${t('wolf')}: ${getWolfs()}`}</li>
-                    {
-                      (isUsePredictor) && (<li>{`${t('predictor')}: ${list.find(role => role.role.key === PREDICTOR.key).index}`}</li>)
-                    }
-                    {
-                      (isUseWitch) && (<li>{`${t('witch')}: ${list.find(role => role.role.key === WITCH.key).index}`}</li>)
-                    }
-                    {
-                      (isUseHunter) && (<li>{`${t('hunter')}: ${list.find(role => role.role.key === HUNTER.key).index}`}</li>)
-                    }
-                    {
-                      (isUseKnight) && (<li>{`${t('knight')}: ${list.find(role => role.role.key === KNIGHT.key).index}`}</li>)
-                    }
-                    {
-                      (isUseidiot) && (<li>{`${t('idiot')}: ${list.find(role => role.role.key === idiot.key).index}`}</li>)
-                    }
-                    {
-                      (isUseGuard) && (<li>{`${t('guard')}: ${list.find(role => role.role.key === GUARD.key).index}`}</li>)
-                    }
-                    <li>{`${t('villager')}: ${getVillages()}`}</li>
-                  </ul>
+                  <div>
+                    <strong>{t('all_players')}</strong>
+                    <ul>
+                      {
+                        list.sort((a,b) => a.index - b.index).map((player) => (
+                          <li key={player.index}>
+                            {`${player.index}號: ${t(player.role.key.toLowerCase())}`}
+                          </li>
+                        ))
+                      }
+                    </ul>
+                  </div>
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
@@ -1758,28 +1743,18 @@ const Game = (props) => {
               { 
                 <span className={classes.good}>{gameResultMessage}</span>
               }
-              <ul>
-                <li>{`${t('wolf')}: ${getWolfs()}`}</li>
-                {
-                  (isUsePredictor) && (<li>{`${t('predictor')}: ${list.find(role => role.role.key === PREDICTOR.key).index}`}</li>)
-                }
-                {
-                  (isUseWitch) && (<li>{`${t('witch')}: ${list.find(role => role.role.key === WITCH.key).index}`}</li>)
-                }
-                {
-                  (isUseHunter) && (<li>{`${t('hunter')}: ${list.find(role => role.role.key === HUNTER.key).index}`}</li>)
-                }
-                {
-                  (isUseKnight) && (<li>{`${t('knight')}: ${list.find(role => role.role.key === KNIGHT.key).index}`}</li>)
-                }
-                {
-                  (isUseidiot) && (<li>{`${t('idiot')}: ${list.find(role => role.role.key === idiot.key).index}`}</li>)
-                }
-                {
-                  (isUseGuard) && (<li>{`${t('guard')}: ${list.find(role => role.role.key === GUARD.key).index}`}</li>)
-                }
-                <li>{`${t('villager')}: ${getVillages()}`}</li>
-              </ul>
+              <div>
+                <strong>{t('all_players')}</strong>
+                <ul>
+                  {
+                    list.sort((a,b) => a.index - b.index).map((player) => (
+                      <li key={player.index}>
+                        {`${player.index}號: ${t(player.role.key.toLowerCase())}`}
+                      </li>
+                    ))
+                  }
+                </ul>
+              </div>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
