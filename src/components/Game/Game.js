@@ -868,7 +868,7 @@ const Game = (props) => {
           setIsOpenGameResult(true);
           setGameResultMessage(result.message);
         } else {
-          // 檢查獵人是否死亡
+          // 檢查獵人和狼王是否死亡
           const isHunter = checkHunter(tmpDead);
           const isWolfKing = checkWolfKing(tmpDead);
 
@@ -1013,37 +1013,37 @@ const Game = (props) => {
   const handleShoot = (isShoot) => {
     setIsOpenHunter(false);
     setIsUseHunterSkill(true);
-    // console.log('isShoot', isShoot);
+    
+    let currentDead = [...dead];
     if (isShoot) {
-      const tmpDead = [
+      currentDead = [
         ...dead,
         hunterSelect,
       ];
 
-      setDead(tmpDead);
+      setDead(currentDead);
       setMessages([
         ...messages,
         t('hunter_shoot_player', { index: hunterSelect.index })
       ]);
-      const result = checkGameFinished(tmpDead);
+    }
 
-      if (result.isFinished) {
-        setIsOpenGameResult(true);
-        setGameResultMessage(result.message);
+    const result = checkGameFinished(currentDead);
+
+    if (result.isFinished) {
+      setIsOpenGameResult(true);
+      setGameResultMessage(result.message);
+    } else {
+      // 獵人開完槍後，檢查狼王是否也死了需要開槍
+      const isWolfKing = checkWolfKing(currentDead);
+      if (isWolfKing) {
+        setIsOpenWolfKingShoot(true);
       } else {
-        // console.log('11', dayType);
         if (dayType === DAY_TYPE.DAY) {
           initSelect(true);
         } else {
           initSelect(false);
         }
-      }
-    } else {
-      // console.log('22', dayType);
-      if (dayType === DAY_TYPE.DAY) {
-        initSelect(true);
-      } else {
-        initSelect(false);
       }
     }
   }
@@ -1057,34 +1057,37 @@ const Game = (props) => {
   const handleWolfKingShoot = (isShoot) => {
     setIsOpenWolfKingShoot(false);
     setIsUseWolfKingSkill(true);
+    
+    let currentDead = [...dead];
     if (isShoot) {
-      const tmpDead = [
+      currentDead = [
         ...dead,
         wolfKingSelect,
       ];
 
-      setDead(tmpDead);
+      setDead(currentDead);
       setMessages([
         ...messages,
         t('wolf_king_shoot_player', { index: wolfKingSelect.index })
       ]);
-      const result = checkGameFinished(tmpDead);
+    }
 
-      if (result.isFinished) {
-        setIsOpenGameResult(true);
-        setGameResultMessage(result.message);
+    const result = checkGameFinished(currentDead);
+
+    if (result.isFinished) {
+      setIsOpenGameResult(true);
+      setGameResultMessage(result.message);
+    } else {
+      // 狼王開完槍後，檢查獵人是否也死了需要開槍
+      const isHunter = checkHunter(currentDead);
+      if (isHunter) {
+        setIsOpenHunter(true);
       } else {
         if (dayType === DAY_TYPE.DAY) {
           initSelect(true);
         } else {
           initSelect(false);
         }
-      }
-    } else {
-      if (dayType === DAY_TYPE.DAY) {
-        initSelect(true);
-      } else {
-        initSelect(false);
       }
     }
   }
@@ -1115,8 +1118,10 @@ const Game = (props) => {
       // 進入晚上
       setDayType(DAY_TYPE.NIGHT);
 
-      // 進入 Step 1
-      setStep(1);
+      // 進入 Step 1 (稍微延遲確保狀態已更新)
+      setTimeout(() => {
+        setStep(1);
+      }, 500);
     } else {
       setDayType(DAY_TYPE.DAY);
     }
