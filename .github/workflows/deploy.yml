@@ -17,6 +17,7 @@ jobs:
         env:
           NODE_OPTIONS: --openssl-legacy-provider
           SKIP_PREFLIGHT_CHECK: true
+          CI: false
         run: |
           npm install
           npm run build
