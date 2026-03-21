@@ -1034,7 +1034,7 @@ const Game = (props) => {
       setIsOpenGameResult(true);
       setGameResultMessage(result.message);
     } else {
-      // 獵人開完槍後，檢查狼王是否也死了需要開槍
+      // 獵人開完槍後，檢查狼王是否死在名單裡 (可能是之前死的，也可能是剛被獵人打死的)
       const isWolfKing = checkWolfKing(currentDead);
       if (isWolfKing) {
         setIsOpenWolfKingShoot(true);
@@ -1078,7 +1078,7 @@ const Game = (props) => {
       setIsOpenGameResult(true);
       setGameResultMessage(result.message);
     } else {
-      // 狼王開完槍後，檢查獵人是否也死了需要開槍
+      // 狼王開完槍後，檢查獵人是否死在名單裡 (可能是之前死的，也可能是剛被狼王打死的)
       const isHunter = checkHunter(currentDead);
       if (isHunter) {
         setIsOpenHunter(true);
