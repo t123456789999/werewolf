@@ -456,11 +456,11 @@ const Game = (props) => {
     if (!isPoison) {
       setWitchDeadNumber(null);
     } else {
-      // 使用毒藥, 判斷是不是毒到獵人
+      // 使用毒藥, 判斷是不是毒到獵人或狼王
       if (IS_DEBUG) {
         console.log('witchDeadNumber.role.key', witchDeadNumber.role.key);
       }
-      if (witchDeadNumber !== null && witchDeadNumber.role.key === HUNTER.key) {
+      if (witchDeadNumber !== null && (witchDeadNumber.role.key === HUNTER.key || witchDeadNumber.role.key === WOLF_KING.key)) {
         setIsKillByWitch(true);
       }
     }
@@ -698,11 +698,14 @@ const Game = (props) => {
       setIsOpenGameResult(true);
       setGameResultMessage(result.message);
     } else {
-      // 檢查獵人是否死亡
+      // 檢查獵人或狼王是否死亡
       const isHunter = checkHunter(tmpDead);
+      const isWolfKing = checkWolfKing(tmpDead);
 
       if (isHunter) {
         setIsOpenHunter(true);
+      } else if (isWolfKing) {
+        setIsOpenWolfKingShoot(true);
       } else {
         setTimeout(() => {
           initSelect(false);
@@ -819,6 +822,15 @@ const Game = (props) => {
     return returnComp;
   }
 
+  const checkWolfKing = (dead) => {
+    let isWolfKing = false;
+    // 狼王被毒殺不能開槍 (依不同規則，這裡假設跟獵人一樣)
+    if (isUseWolfKing && !isUseWolfKingSkill && !isKillByWitch) {
+      isWolfKing = dead.some(tmp => tmp.role.key === WOLF_KING.key);
+    }
+    return isWolfKing;
+  }
+
   /**
    * handleVote
    * 投票結果
@@ -826,8 +838,6 @@ const Game = (props) => {
    * @param {bool} isVote - 是否有投票, false: 放棄
    */
   const handleVote = (isVote) => {
-    setDayType(DAY_TYPE.DAY);
-
     // 關閉投票視窗
     setIsOpenVote(false);
 
@@ -846,19 +856,12 @@ const Game = (props) => {
           ...dead,
           selectVote,
         ]
-        if (isVote) {
-          setDead(tmpDead);
-    
-          setMessages([
-            ...messages,
-            `${t('n_day', { day })}${selectVote.index}`,
-          ]);
-        } else {
-          setMessages([
-            ...messages,
-            `${t('n_day', { day })}${t('give_up_vote')}`,
-          ]);
-        }
+        setDead(tmpDead);
+
+        setMessages([
+          ...messages,
+          `${t('n_day', { day })}${selectVote.index}`,
+        ]);
     
         const result = checkGameFinished(tmpDead);
         if (result.isFinished) {
@@ -874,27 +877,15 @@ const Game = (props) => {
           } else if (isWolfKing) {
             setIsOpenWolfKingShoot(true);
           } else {
-            // initSelect(true);
             setIsOpenLastWords(true);
           }
         }
-        }
-
-        /**
-        * checkWolfKing
-        * 檢查狼王是否死亡 (且可以開槍)
-        */
-        const checkWolfKing = (dead) => {
-        let isWolfKing = false;
-        // 狼王被毒殺、帶走可以開槍 (依不同規則，這裡假設跟獵人一樣)
-        if (isUseWolfKing && !isUseWolfKingSkill) {
-            isWolfKing = dead.some(tmp => tmp.role.key === WOLF_KING.key);
-        }
-        return isWolfKing;
-        }
-
+      }
     } else {
-      // initSelect(true);
+      setMessages([
+        ...messages,
+        `${t('n_day', { day })}${t('give_up_vote')}`,
+      ]);
       setIsOpenLastWords(true);
     }
   }
