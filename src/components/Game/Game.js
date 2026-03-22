@@ -269,29 +269,30 @@ const Game = (props) => {
         break;
       case 7:
         if (!isWitchDead) {
+          // 如果守衛守的人跟狼人殺的人一樣，女巫仍然可以看到誰被殺 (或是依照規則看不到，這裡先維持可以看到)
           setIsOpenWitchSave(true);
-        }
-        setStep(8);
-        break;
-      case 8:
-        if (isWitchDead) {
+        } else {
+          // 女巫死了，直接跳過
           setTimeout(() => {
-            setStep(9)
+            setStep(9);
           }, 2000);
         }
+        break;
+      case 8:
+        // 等待 handleWitchSave 處理
         break;
       case 9:
         if (!isWitchDead) {
           setIsOpenWitchPoison(true);
-        }
-        setStep(10);
-        break;
-      case 10:
-        if (isWitchDead) {
+        } else {
+          // 女巫死了，直接跳過
           setTimeout(() => {
-            setStep(11)
+            setStep(11);
           }, 2000);
         }
+        break;
+      case 10:
+        // 等待 handleWitchPoison 處理
         break;
       case 11:
         // 是否使用預言家
@@ -1722,26 +1723,6 @@ const Game = (props) => {
                   <div>
                     <strong>{t('all_players')}</strong>
                     <ul>
-                      { /* 狼人陣營 */ }
-                      <li key="wolf_group_mirror">
-                        <strong>{t('wolf')}:</strong> {getWolfs()}
-                      </li>
-                      
-                      { /* 神職陣營 (分別列出) */ }
-                      { (isUsePredictor) && <li key="pred_group_mirror"><strong>{t('predictor')}:</strong> {list.find(r => r.role.key === PREDICTOR.key).index}</li> }
-                      { (isUseWitch) && <li key="witch_group_mirror"><strong>{t('witch')}:</strong> {list.find(r => r.role.key === WITCH.key).index}</li> }
-                      { (isUseHunter) && <li key="hunt_group_mirror"><strong>{t('hunter')}:</strong> {list.find(r => r.role.key === HUNTER.key).index}</li> }
-                      { (isUseKnight) && <li key="knig_group_mirror"><strong>{t('knight')}:</strong> {list.find(r => r.role.key === KNIGHT.key).index}</li> }
-                      { (isUseidiot) && <li key="idio_group_mirror"><strong>{t('idiot')}:</strong> {list.find(r => r.role.key === idiot.key).index}</li> }
-                      { (isUseGuard) && <li key="guar_group_mirror"><strong>{t('guard')}:</strong> {list.find(r => r.role.key === GUARD.key).index}</li> }
-
-                      { /* 村民陣營 */ }
-                      <li key="villager_group_mirror">
-                        <strong>{t('villager')}:</strong> {getVillages()}
-                      </li>
-                      
-                      <Divider style={{ margin: '10px 0' }} />
-                      <strong>{t('all_players')}</strong>
                       {
                         list.sort((a,b) => a.index - b.index).map((player) => (
                           <li key={player.index}>
