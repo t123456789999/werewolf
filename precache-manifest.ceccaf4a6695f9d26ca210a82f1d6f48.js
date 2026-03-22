@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "fc94120fef313ed01b0fcc3370077f60",
+    "revision": "0ea08adf2fc3fc0e44dd036d63e96f89",
     "url": "/werewolf/index.html"
   },
   {
-    "revision": "4da57a2cf89993d0f34c",
+    "revision": "781df13a281362a789a6",
     "url": "/werewolf/static/css/main.7eac0109.chunk.css"
   },
   {
-    "revision": "a88b4bdd1258994b657f",
-    "url": "/werewolf/static/js/2.c7c59584.chunk.js"
+    "revision": "15ae657a5cbdfe15d18f",
+    "url": "/werewolf/static/js/2.4b5aca6b.chunk.js"
   },
   {
-    "revision": "4da57a2cf89993d0f34c",
-    "url": "/werewolf/static/js/main.06e1c5f5.chunk.js"
+    "revision": "781df13a281362a789a6",
+    "url": "/werewolf/static/js/main.1db2ae31.chunk.js"
   },
   {
     "revision": "8961eb29beb599689901",
@@ -22,6 +22,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "a7d9ef5f0acbc4b5dc0c5f771ffba06a",
     "url": "/werewolf/static/media/day_break.a7d9ef5f.mp3"
+  },
+  {
+    "revision": "74f8c166b3cd02b8112a8a6f20748848",
+    "url": "/werewolf/static/media/guard.74f8c166.jpg"
   },
   {
     "revision": "5e15bee53762419e4e9b353362dfa5b1",
@@ -36,8 +40,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/werewolf/static/media/guard_select.05f93647.mp3"
   },
   {
-    "revision": "5cf4e8f1e6889192e34af924b322f224",
-    "url": "/werewolf/static/media/hunter.5cf4e8f1.jpg"
+    "revision": "be95e9aeb762dacb5416e3ec5e5203ba",
+    "url": "/werewolf/static/media/hunter.be95e9ae.jpg"
   },
   {
     "revision": "e7d96e3ea530616711d3406526f5bdfd",
@@ -48,8 +52,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/werewolf/static/media/hunter_open.99894c39.mp3"
   },
   {
-    "revision": "4beb90c177ba0ae7842d13b18582d7c1",
-    "url": "/werewolf/static/media/idiot.4beb90c1.jpg"
+    "revision": "0ab2f1162f894dd63b037bd88506bff1",
+    "url": "/werewolf/static/media/idiot.0ab2f116.jpg"
   },
   {
     "revision": "05bbb86fcca3ba8673c267cdb19332a3",
@@ -60,8 +64,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/werewolf/static/media/idiot_open.6c44e2a0.mp3"
   },
   {
-    "revision": "998fe9ac3100bd09061d90b9b06c3ec1",
-    "url": "/werewolf/static/media/knight.998fe9ac.jpg"
+    "revision": "73b24415abd6e479fbc62ae2d91291c2",
+    "url": "/werewolf/static/media/knight.73b24415.jpg"
   },
   {
     "revision": "75d0a097188a359d642add9e433e81ff",
@@ -76,8 +80,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/werewolf/static/media/night_start.6751b7d1.mp3"
   },
   {
-    "revision": "473d5f2891a7a2e5bd3a484df2a28136",
-    "url": "/werewolf/static/media/predictor.473d5f28.jpg"
+    "revision": "927ae322d866ae0d6a1034bcd77c00d6",
+    "url": "/werewolf/static/media/predictor.927ae322.jpg"
   },
   {
     "revision": "488a98a430ee4dbe3e857a164f1b0195",
@@ -96,12 +100,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/werewolf/static/media/predictor_result.02591e0a.mp3"
   },
   {
-    "revision": "fa735092262fea83f55cc941318244bb",
-    "url": "/werewolf/static/media/villager.fa735092.jpg"
+    "revision": "ad3496efcc00965663794fe4f5c5e1aa",
+    "url": "/werewolf/static/media/villager.ad3496ef.jpg"
   },
   {
-    "revision": "4dc6d5d22fc38e687e27e1895199f29d",
-    "url": "/werewolf/static/media/witch.4dc6d5d2.jpg"
+    "revision": "a80e9820b79d9a6d50c24ae238938df8",
+    "url": "/werewolf/static/media/witch.a80e9820.jpg"
   },
   {
     "revision": "9f00d56d19144d3c2c0ac142418a4393",
@@ -128,8 +132,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/werewolf/static/media/witch_save.4898a6d4.mp3"
   },
   {
-    "revision": "9caa04d0b71646a7a12f58cebcf2ca0d",
-    "url": "/werewolf/static/media/wolf.9caa04d0.jpg"
+    "revision": "23c75bef489f1964a9627e6adab7116d",
+    "url": "/werewolf/static/media/wolf.23c75bef.jpg"
   },
   {
     "revision": "3f6f4aa3d8273c38b432938e5ad3f8f6",
@@ -142,6 +146,14 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "a75253e41ade31690cfe412524471650",
     "url": "/werewolf/static/media/wolf_kill.a75253e4.mp3"
+  },
+  {
+    "revision": "29ed25a328229862abcc543b8e8584b1",
+    "url": "/werewolf/static/media/wolf_king.29ed25a3.jpg"
+  },
+  {
+    "revision": "01c918813536734918d3c878563a687c",
+    "url": "/werewolf/static/media/wolf_knight.01c91881.jpg"
   },
   {
     "revision": "264c120e03b1bd33f61c71cb75554f20",
