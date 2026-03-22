@@ -911,7 +911,7 @@ const Game = (props) => {
                       </span>
                     </Avatar> 
                   ) : (
-                    <Avatar className={sit.index === selectValue?.index ? classes.pinkAvatar : (idDead ? classes.dead : classes.avatar)} onClick={() => {selectFunc(sit)}}>
+                    <Avatar className={(selectValue && sit.index === selectValue.index) ? classes.pinkAvatar : (idDead ? classes.dead : classes.avatar)} onClick={() => {selectFunc(sit)}}>
                       <span className={classes.number}>
                         { sit.index }
                       </span>
