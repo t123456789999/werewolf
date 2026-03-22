@@ -58,5 +58,5 @@ export const GUARD = {
   key: 'guard',
   isGood: true,
   isGod: true,
-  src: 'guard.jpg',
+  src: 'knight.jpg',
 };
