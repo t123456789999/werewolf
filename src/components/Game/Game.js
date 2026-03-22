@@ -2312,7 +2312,7 @@ const Game = (props) => {
         </div>
       </Dialog>
       {/* idiot Result End */}
-    </>
+    </Paper>
   );
 };
 
