@@ -45,14 +45,18 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1),
     minWidth: '100%',
     '& label': {
-      color: '#aaa',
+      color: '#ffeb3b', // 改為亮黃色，與背景完全區隔
+      fontWeight: 'bold',
+      fontSize: '1.1rem',
     },
     '& select': {
       color: '#fff',
-      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+      marginTop: theme.spacing(3),
+      padding: '5px',
       '& option': {
-        backgroundColor: '#333',
-        color: '#fff',
+        backgroundColor: '#1a1a1a', // 深黑底
+        color: '#fff', // 純白字
       },
     },
   },

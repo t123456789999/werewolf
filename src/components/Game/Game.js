@@ -55,8 +55,6 @@ import predictor_result from '../../static/audio/predictor_result.mp3'; // 他�
 import predictor_close from '../../static/audio/predictor_close.mp3'; // 預言家請閉眼
 import hunter_open from '../../static/audio/hunter_open.mp3'; // 獵人請睜眼
 import hunter_close from '../../static/audio/hunter_close.mp3'; // 獵人請閉眼
-import idiot_open from '../../static/audio/idiot_open.mp3'; // 白癡請睜眼
-import idiot_close from '../../static/audio/idiot_close.mp3'; // 白癡請閉眼
 import day_break from '../../static/audio/day_break.mp3'; // 天亮請睜眼
 
 // 守衛語音
@@ -348,11 +346,7 @@ const Game = (props) => {
               // 是否使用獵人
               setStep(16);
             } else {
-              if (isUseidiot) {
-                setStep(20);
-              } else {
-                setStep(22);
-              }
+              setStep(22);
             }
           }
         }
@@ -396,11 +390,7 @@ const Game = (props) => {
             // 是否使用獵人
             setStep(16);
           } else {
-            if (isUseidiot) {
-              setStep(20);
-            } else {
-              setStep(22);
-            }
+            setStep(22);
           }
         }
         // setStep(12);
@@ -430,11 +420,7 @@ const Game = (props) => {
           // 是否使用獵人
           setStep(16);
         } else {
-          if (isUseidiot) {
-            setStep(20);
-          } else {
-            setStep(22);
-          }
+          setStep(22);
         }
         break;
       case 16:
@@ -447,17 +433,7 @@ const Game = (props) => {
         }
         break;
       case 17:
-        if (isUseidiot) {
-          setStep(20);
-        } else {
-          setStep(22);
-        }
-        break;
-      case 20:
-        setStep(21);
-        break;
-      case 21:
-          setStep(22);
+        setStep(22);
         break;
       case 22:
         setIsOpenResult(true);
@@ -634,12 +610,6 @@ const Game = (props) => {
         break;
       case 17:
         returnSrc = hunter_close;
-        break;
-      case 20:
-        returnSrc = idiot_open;
-        break;
-      case 21:
-        returnSrc = idiot_close;
         break;
       case 22:
         returnSrc = day_break;
@@ -1628,7 +1598,7 @@ const Game = (props) => {
               <DialogContent>
                 <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                   {
-                    (predictorSelect && predictorSelect.role.key === 'wolf') ? (
+                    (predictorSelect && (predictorSelect.role.key === WOLF.key || predictorSelect.role.key === WOLF_KING.key)) ? (
                       <span className={classes.bad}>{t('is_wolf')}</span>
                     ) : (
                       <span className={classes.good}>{t('not_wolf')}</span>
@@ -1649,15 +1619,14 @@ const Game = (props) => {
           <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('role_result')}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
-              {
-                (predictorSelect && predictorSelect.role.key === 'wolf') ? (
-                  <span className={classes.bad}>{t('is_wolf')}</span>
-                ) : (
-                  <span className={classes.good}>{t('not_wolf')}</span>
-                )
-              }
-            </DialogContentText>
-          </DialogContent>
+            {
+            (predictorSelect && (predictorSelect.role.key === WOLF.key || predictorSelect.role.key === WOLF_KING.key)) ? (
+              <span className={classes.bad}>{t('is_wolf')}</span>
+            ) : (
+              <span className={classes.good}>{t('not_wolf')}</span>
+            )
+            }
+            </DialogContentText>          </DialogContent>
           <DialogActions>
             <Button onClick={() => {handleCloseCheckRole()}} color="primary" variant="contained">
               { t('confirm') }

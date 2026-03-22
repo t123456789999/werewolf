@@ -69,6 +69,15 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1,
     textAlign: 'left',
+    color: '#ffeb3b',
+    fontWeight: 'bold',
+    fontSize: '1.5rem',
+    textShadow: '0 0 10px rgba(255, 235, 59, 0.5), 2px 2px 2px rgba(0,0,0,0.8)',
+    letterSpacing: '2px',
+  },
+  appBar: {
+    backgroundColor: '#1a1a1a',
+    borderBottom: '2px solid #ffeb3b',
   },
   list: {
     width: 250,
@@ -293,7 +302,7 @@ const Home = (props) => {
     <div style={{ height: '100vh' }}>
       <Container maxWidth={false} className={classes.container}>
         <Typography component="div" >
-          <AppBar position="static">
+          <AppBar position="static" className={classes.appBar}>
             <Toolbar>
               <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
                 <MenuIcon />
