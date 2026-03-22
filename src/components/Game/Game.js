@@ -1015,9 +1015,10 @@ const Game = (props) => {
       ];
 
       setDead(currentDead);
+      const shooter = list.find(tmp => tmp.role.key === HUNTER.key);
       setMessages([
         ...messages,
-        t('hunter_shoot_player', { index: hunterSelect.index })
+        t('hunter_shoot_player', { shooterIndex: shooter ? shooter.index : '?', index: hunterSelect.index })
       ]);
     }
 
@@ -1061,9 +1062,10 @@ const Game = (props) => {
       ];
 
       setDead(currentDead);
+      const shooter = list.find(tmp => tmp.role.key === WOLF_KING.key);
       setMessages([
         ...messages,
-        t('wolf_king_shoot_player', { index: wolfKingSelect.index })
+        t('wolf_king_shoot_player', { shooterIndex: shooter ? shooter.index : '?', index: wolfKingSelect.index })
       ]);
     }
 
