@@ -55,8 +55,6 @@ import predictor_result from '../../static/audio/predictor_result.mp3'; // 他�
 import predictor_close from '../../static/audio/predictor_close.mp3'; // 預言家請閉眼
 import hunter_open from '../../static/audio/hunter_open.mp3'; // 獵人請睜眼
 import hunter_close from '../../static/audio/hunter_close.mp3'; // 獵人請閉眼
-import knight_open from '../../static/audio/knight_open.mp3'; // 騎士請睜眼
-import knight_close from '../../static/audio/knight_close.mp3'; // 騎士請閉眼
 import idiot_open from '../../static/audio/idiot_open.mp3'; // 白癡請睜眼
 import idiot_close from '../../static/audio/idiot_close.mp3'; // 白癡請閉眼
 import day_break from '../../static/audio/day_break.mp3'; // 天亮請睜眼
@@ -350,14 +348,10 @@ const Game = (props) => {
               // 是否使用獵人
               setStep(16);
             } else {
-              if (isUseKnight) {
-                setStep(18);
+              if (isUseidiot) {
+                setStep(20);
               } else {
-                if (isUseidiot) {
-                  setStep(20);
-                } else {
-                  setStep(22);
-                }
+                setStep(22);
               }
             }
           }
@@ -402,14 +396,10 @@ const Game = (props) => {
             // 是否使用獵人
             setStep(16);
           } else {
-            if (isUseKnight) {
-              setStep(18);
+            if (isUseidiot) {
+              setStep(20);
             } else {
-              if (isUseidiot) {
-                setStep(20);
-              } else {
-                setStep(22);
-              }
+              setStep(22);
             }
           }
         }
@@ -440,14 +430,10 @@ const Game = (props) => {
           // 是否使用獵人
           setStep(16);
         } else {
-          if (isUseKnight) {
-            setStep(18);
+          if (isUseidiot) {
+            setStep(20);
           } else {
-            if (isUseidiot) {
-              setStep(20);
-            } else {
-              setStep(22);
-            }
+            setStep(22);
           }
         }
         break;
@@ -461,31 +447,11 @@ const Game = (props) => {
         }
         break;
       case 17:
-        if (isUseKnight) {
-          setStep(18);
+        if (isUseidiot) {
+          setStep(20);
         } else {
-          if (isUseidiot) {
-            setStep(20);
-          } else {
-            setStep(22);
-          }
+          setStep(22);
         }
-        break;
-      case 18:
-        // 騎士睜眼完，暫停 5 秒再閉眼
-        setTimeout(() => {
-          setStep(19);
-        }, 5000);
-        break;
-      case 19:
-        // 騎士閉眼完，暫停 2 秒再進下一步
-        setTimeout(() => {
-          if (isUseidiot) {
-            setStep(20);
-          } else {
-            setStep(22);
-          }
-        }, 2000);
         break;
       case 20:
         setStep(21);
@@ -668,12 +634,6 @@ const Game = (props) => {
         break;
       case 17:
         returnSrc = hunter_close;
-        break;
-      case 18:
-        returnSrc = knight_open;
-        break;
-      case 19:
-        returnSrc = knight_close;
         break;
       case 20:
         returnSrc = idiot_open;
