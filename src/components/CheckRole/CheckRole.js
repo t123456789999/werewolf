@@ -13,27 +13,97 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
 import wolf from '../../static/images/wolf.jpg';
+import wolf_king from '../../static/images/wolf_king.jpg';
 import predictor from '../../static/images/predictor.jpg';
 import witch from '../../static/images/witch.jpg';
 import hunter from '../../static/images/hunter.jpg';
 import knight from '../../static/images/knight.jpg';
 import idiot from '../../static/images/idiot.jpg';
 import villager from '../../static/images/villager.jpg';
+import guard from '../../static/images/guard.jpg';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    padding: theme.spacing(3, 2),
-    margin: '10px',
+  container: {
+    padding: theme.spacing(3),
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    borderRadius: '15px',
+    marginTop: '20px',
+    color: '#fff',
   },
-  isChecked: {
-    color: 'red',
-  },
-  role: {
+  title: {
+    color: '#ffeb3b',
+    fontWeight: 'bold',
+    marginBottom: theme.spacing(3),
     textAlign: 'center',
-    fontSize: '30px',
+    textShadow: '0 0 10px rgba(255, 235, 59, 0.5)',
   },
+  card: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    backgroundColor: '#333',
+    color: '#fff',
+    cursor: 'pointer',
+    transition: '0.3s',
+    border: '2px solid rgba(255, 255, 255, 0.1)',
+    '&:hover': {
+      transform: 'translateY(-5px)',
+      borderColor: '#ffeb3b',
+      boxShadow: '0 5px 15px rgba(255, 235, 59, 0.3)',
+    },
+  },
+  cardChecked: {
+    backgroundColor: '#1a1a1a',
+    borderColor: '#4caf50',
+    opacity: 0.8,
+  },
+  icon: {
+    fontSize: '40px',
+    marginBottom: theme.spacing(1),
+  },
+  checkedIcon: {
+    color: '#4caf50',
+  },
+  uncheckIcon: {
+    color: '#ffeb3b',
+  },
+  dialogPaper: {
+    backgroundColor: '#1a1a1a',
+    color: '#fff',
+    border: '2px solid #ffeb3b',
+    borderRadius: '15px',
+  },
+  dialogTitle: {
+    color: '#ffeb3b',
+    textAlign: 'center',
+    fontSize: '1.5rem',
+  },
+  roleName: {
+    fontSize: '2rem',
+    fontWeight: 'bold',
+    color: '#fff',
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(1),
+    textAlign: 'center',
+  },
+  roleImg: {
+    borderRadius: '10px',
+    boxShadow: '0 0 20px rgba(0,0,0,0.5)',
+    border: '1px solid rgba(255,255,255,0.2)',
+  },
+  startBtn: {
+    marginTop: '40px',
+    padding: '12px 60px',
+    fontSize: '1.2rem',
+    background: 'linear-gradient(45deg, #f44336 30%, #ffeb3b 90%)',
+    color: 'white',
+    fontWeight: 'bold',
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+  }
 }));
 
 const RoleCard = (props) => {
@@ -57,72 +127,54 @@ const RoleCard = (props) => {
 
   let src = null;
   switch(sit.role.key) {
-    case 'wolf':
-      src = wolf;
-      break;
-    case 'predictor':
-      src = predictor;
-      break;
-    case 'witch':
-      src = witch;
-      break;
-    case 'hunter':
-      src = hunter;
-      break;
-    case 'knight':
-      src = knight;
-      break;
-    case 'idiot':
-      src = idiot;
-      break;
-    case 'villager':
-      src = villager;
-      break;
-    case 'guard':
-      src = villager; // Default to villager if no guard image
-      break;
-    case 'wolf_king':
-      src = wolf; // Default to wolf if no wolf_king image
-      break;
-    default:
-      break;
+    case 'wolf': src = wolf; break;
+    case 'wolf_king': src = wolf_king; break;
+    case 'predictor': src = predictor; break;
+    case 'witch': src = witch; break;
+    case 'hunter': src = hunter; break;
+    case 'knight': src = knight; break;
+    case 'idiot': src = idiot; break;
+    case 'villager': src = villager; break;
+    case 'guard': src = guard; break;
+    default: src = villager; break;
   };
 
   return (
     <>
-      <Paper className={classes.root} onClick={handleClick}>
-        <Typography variant="h5" component="h3">
-          { 
-            t('sit_number', { index: sit.index }) 
-            // sit.role.key
-          }
+      <Paper 
+        className={`${classes.card} ${isWatch ? classes.cardChecked : ''}`} 
+        onClick={handleClick}
+      >
+        {isWatch ? (
+          <CheckCircleIcon className={`${classes.icon} ${classes.checkedIcon}`} />
+        ) : (
+          <HelpOutlineIcon className={`${classes.icon} ${classes.uncheckIcon}`} />
+        )}
+        <Typography variant="h6">
+          { t('sit_number', { index: sit.index }) }
         </Typography>
-        <Typography component="p">
-          { (isWatch) ? (
-            <span className={classes.isChecked}>
-              { t('is_checked') }
-            </span>
-          ) : t('check_role') }
+        <Typography variant="body2">
+          { isWatch ? t('is_checked') : t('check_role') }
         </Typography>
       </Paper>
 
       <Dialog
         fullWidth
         open={isOpen}
+        classes={{ paper: classes.dialogPaper }}
         aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{t('your_role')}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            <div className={classes.role}>
-              { t(sit.role.key) }
-            </div>
-            <img src={src} width="100%" />
-          </DialogContentText>
+        <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>
+          {t('your_role')}
+        </DialogTitle>
+        <DialogContent style={{ textAlign: 'center' }}>
+          <img src={src} className={classes.roleImg} width="80%" />
+          <div className={classes.roleName}>
+            { t(sit.role.key) }
+          </div>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary" variant="contained">
+        <DialogActions style={{ justifyContent: 'center', paddingBottom: '20px' }}>
+          <Button onClick={handleClose} color="primary" variant="contained" style={{ backgroundColor: '#ffeb3b', color: '#000', fontWeight: 'bold' }}>
             { t('confirm') }
           </Button>
         </DialogActions>
@@ -134,24 +186,36 @@ const RoleCard = (props) => {
 const CheckRole = (props) => {
   const { t } = useTranslation();
   const { list, handleStartGame } = props;
-  // const classes = useStyles();
+  const classes = useStyles();
 
   return (
-    <> 
-      {
-        list.map((sit, index) => {
-          return (
-            <div key={`role_${index}`}>
-              <RoleCard
-                sit={sit}
-              />
-            </div>
-          )
-        })
-      }
-      <Divider style={{ marginTop: '20px' }} />
-      <Button style={{ marginTop: '20px', marginBottom: '20px' }} onClick={handleStartGame} variant="contained" color="secondary">{t('start')}</Button>
-    </>
+    <Paper className={classes.container}>
+      <Typography variant="h4" className={classes.title}>
+        { t('check_role_title', '確認身分') }
+      </Typography>
+      
+      <Grid container spacing={3} justify="center">
+        {
+          list.map((sit, index) => {
+            return (
+              <Grid item xs={6} sm={4} md={3} key={`role_${index}`}>
+                <RoleCard sit={sit} />
+              </Grid>
+            )
+          })
+        }
+      </Grid>
+
+      <div style={{ textAlign: 'center' }}>
+        <Button 
+          className={classes.startBtn}
+          onClick={handleStartGame} 
+          variant="contained"
+        >
+          {t('start')}
+        </Button>
+      </div>
+    </Paper>
   );
 };
 

@@ -50,6 +50,10 @@ const useStyles = makeStyles(theme => ({
     '& select': {
       color: '#fff',
       backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      '& option': {
+        backgroundColor: '#333',
+        color: '#fff',
+      },
     },
   },
   card: {
