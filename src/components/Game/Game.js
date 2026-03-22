@@ -98,44 +98,141 @@ const AudioSound = React.memo((props) => {
   );
 });
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
+  root: {
+    padding: theme.spacing(3, 2),
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    color: '#fff',
+    marginTop: '20px',
+    borderRadius: '15px',
+    boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+    backdropFilter: 'blur(4px)',
+    border: '1px solid rgba(255, 255, 255, 0.18)',
+  },
+  gamingTitle: {
+    color: '#ffeb3b',
+    fontWeight: 'bold',
+    marginBottom: theme.spacing(2),
+    textAlign: 'center',
+    textShadow: '0 0 10px rgba(255, 235, 59, 0.5)',
+  },
+  logSection: {
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    borderRadius: '10px',
+    padding: theme.spacing(2),
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(3),
+    maxHeight: '300px',
+    overflowY: 'auto',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+  },
+  logTitle: {
+    color: '#ffeb3b',
+    fontSize: '1.2rem',
+    marginBottom: theme.spacing(1),
+    borderBottom: '1px solid rgba(255, 235, 59, 0.3)',
+    paddingBottom: theme.spacing(1),
+  },
+  logList: {
+    listStyleType: 'none',
+    padding: 0,
+    margin: 0,
+  },
+  logItem: {
+    padding: '8px 0',
+    borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+    '&:last-child': {
+      borderBottom: 'none',
+    },
+    fontSize: '0.95rem',
+    color: '#e0e0e0',
+  },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: theme.spacing(2),
+    marginTop: theme.spacing(3),
+  },
+  actionBtn: {
+    padding: '10px 30px',
+    background: 'linear-gradient(45deg, #f44336 30%, #ffeb3b 90%)',
+    color: 'white',
+    fontWeight: 'bold',
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    '&:disabled': {
+      background: '#555',
+      color: '#888',
+    },
+  },
   avatar: {
     margin: 7,
     color: '#fff',
-    backgroundColor: '#4DB6AC',
-    width: '40px',
-    height: '40px',
+    backgroundColor: '#444',
+    width: '50px',
+    height: '50px',
+    fontSize: '1.2rem',
+    border: '2px solid rgba(255, 255, 255, 0.2)',
+    cursor: 'pointer',
+    transition: '0.3s',
+    '&:hover': {
+      transform: 'scale(1.1)',
+      borderColor: '#ffeb3b',
+    },
   },
   pinkAvatar: {
     margin: 7,
     color: '#fff',
-    backgroundColor: pink[500],
-    width: '40px',
-    height: '40px',
+    backgroundColor: '#ff1744',
+    width: '50px',
+    height: '50px',
+    fontSize: '1.2rem',
+    border: '2px solid #ffeb3b',
+    boxShadow: '0 0 15px rgba(255, 235, 59, 0.5)',
   },
   dead: {
     margin: 7,
+    color: '#888',
+    backgroundColor: '#222',
+    width: '50px',
+    height: '50px',
+    fontSize: '1.2rem',
+    border: '2px solid #555',
+    opacity: 0.6,
+    filter: 'grayscale(1)',
+  },
+  dialogPaper: {
+    backgroundColor: '#1a1a1a',
     color: '#fff',
-    backgroundColor: '#9E9E9E',
-    width: '40px',
-    height: '40px',
+    border: '1px solid #ffeb3b',
+  },
+  dialogTitle: {
+    color: '#ffeb3b',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  dialogContentText: {
+    color: '#e0e0e0',
+    textAlign: 'center',
   },
   number: {
-    fontSize: '25px',
+    fontSize: '1.2rem',
+    fontWeight: 'bold',
   },
   good: {
-    fontSize: '30px',
+    fontSize: '1.5rem',
+    color: '#4caf50',
+    textAlign: 'center',
+    display: 'block',
+    margin: '10px 0',
   },
   bad: {
-    fontSize: '30px',
-    color: 'red',
+    fontSize: '1.5rem',
+    color: '#f44336',
+    textAlign: 'center',
+    display: 'block',
+    margin: '10px 0',
   },
-  // greenAvatar: {
-  //   margin: 10,
-  //   color: '#fff',
-  //   backgroundColor: green[500],
-  // },
-});
+}));
 
 const Game = (props) => {
   const classes = useStyles();
@@ -373,14 +470,20 @@ const Game = (props) => {
         }
         break;
       case 18:
-        setStep(19);
+        // 騎士睜眼完，暫停 5 秒再閉眼
+        setTimeout(() => {
+          setStep(19);
+        }, 5000);
         break;
       case 19:
-        if (isUseidiot) {
-          setStep(20);
-        } else {
-          setStep(22);
-        }
+        // 騎士閉眼完，暫停 2 秒再進下一步
+        setTimeout(() => {
+          if (isUseidiot) {
+            setStep(20);
+          } else {
+            setStep(22);
+          }
+        }, 2000);
         break;
       case 20:
         setStep(21);
@@ -806,7 +909,7 @@ const Game = (props) => {
                       </span>
                     </Avatar> 
                   ) : (
-                    <Avatar className={className} onClick={() => {selectFunc(sit)}}>
+                    <Avatar className={sit.index === selectValue?.index ? classes.pinkAvatar : (idDead ? classes.dead : classes.avatar)} onClick={() => {selectFunc(sit)}}>
                       <span className={classes.number}>
                         { sit.index }
                       </span>
@@ -1256,38 +1359,59 @@ const Game = (props) => {
    * 
    */
   return (
-    <>
-      <div style={{ paddingTop: '20px' }}>
+    <Paper className={classes.root}>
+      <Typography variant="h4" className={classes.gamingTitle}>
         { t('gaming') }
-      </div>
+      </Typography>
 
-      <div style={{ paddingTop: '20px' }}>
-        { t('dead_message') }
-      </div>
+      {/* 玩家狀態面板 */}
+      <Grid container justify="center" spacing={1} style={{ marginBottom: '30px' }}>
+        {list.map(sit => {
+          const isDead = dead.some(tmp => tmp.index === sit.index);
+          return (
+            <Grid item key={sit.index}>
+              <div style={{ textAlign: 'center' }}>
+                <Avatar className={isDead ? classes.dead : classes.avatar}>
+                  <span className={classes.number}>{sit.index}</span>
+                </Avatar>
+              </div>
+            </Grid>
+          );
+        })}
+      </Grid>
 
-      <div style={{ textAlign: 'left', marginLeft: '10%' }}>
-        <ul>
+      <div className={classes.logSection}>
+        <Typography className={classes.logTitle}>{ t('dead_message') }</Typography>
+        <ul className={classes.logList}>
           {
-            messages.map(message => <li>{ message }</li>)
+            messages.map((message, idx) => (
+              <li key={idx} className={classes.logItem}>
+                { message }
+              </li>
+            ))
           }
         </ul>
       </div>
 
-      <div>
+      <div className={classes.buttonContainer}>
           {
             (dayType === DAY_TYPE.DAY) && (
               <>
-                <Divider style={{ marginBottom: '20px' }} />
                 <Button
                   disabled={(!isUseKnight || isUseKnightSkill)}
                   onClick={() => (setIsOpenKnight(true))}
                   variant="contained"
-                  color="secondary"
+                  className={classes.actionBtn}
                 >
                   { t('knight_fight') }
                 </Button>
-                <Divider style={{ marginTop: '20px', marginBottom: '20px' }} />
-                <Button onClick={() => (setIsOpenVote(true))} variant="contained" color="secondary">{ t('start_vote') }</Button>
+                <Button 
+                  onClick={() => (setIsOpenVote(true))} 
+                  variant="contained" 
+                  className={classes.actionBtn}
+                >
+                  { t('start_vote') }
+                </Button>
               </>
             )
           }
@@ -1301,17 +1425,17 @@ const Game = (props) => {
       { /* Wolf Kill Start */ }
       <Dialog
         fullWidth
+        classes={{ paper: classes.dialogPaper }}
         open={isOpenWolfKill}
-        // onClose={handleCloseWolfKill}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
         {
           (isMirror) && (
             <div style={{ transform: 'rotate(180deg)', borderTop: '1px solid #e0e0e0' }}>
-              <DialogTitle id="alert-dialog-title">{t('wolf_kill')}</DialogTitle>
+              <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('wolf_kill')}</DialogTitle>
               <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                   { generateSelectPicker(WOLF.key) }
                 </DialogContentText>
               </DialogContent>
@@ -1325,9 +1449,9 @@ const Game = (props) => {
           )
         }
         <div>
-          <DialogTitle id="alert-dialog-title">{t('wolf_kill')}</DialogTitle>
+          <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('wolf_kill')}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
               { generateSelectPicker(WOLF.key) }
             </DialogContentText>
           </DialogContent>
@@ -1344,6 +1468,7 @@ const Game = (props) => {
       { /* Witch Save Start */ }
       <Dialog
         fullWidth
+        classes={{ paper: classes.dialogPaper }}
         open={isOpenWitchSave}
         // onClose={handleCloseWolfKill}
         aria-labelledby="alert-dialog-title"
@@ -1352,9 +1477,9 @@ const Game = (props) => {
         {
           (isMirror) && (
             <div style={{ transform: 'rotate(180deg)', borderTop: '1px solid #e0e0e0' }}>
-              <DialogTitle id="alert-dialog-title">{t('witch_save')}</DialogTitle>
+              <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('witch_save')}</DialogTitle>
               <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                   {
                     (isUseSave) ? (
                       <span className={classes.good}>{t('save_used')}</span>
@@ -1380,9 +1505,9 @@ const Game = (props) => {
           )
         }
         <div>
-          <DialogTitle id="alert-dialog-title">{t('witch_save')}</DialogTitle>
+          <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('witch_save')}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
               {
                 (isUseSave) ? (
                   <span className={classes.good}>{t('save_used')}</span>
@@ -1411,6 +1536,7 @@ const Game = (props) => {
       {/* Witch Poison Start */}
       <Dialog
         fullWidth
+        classes={{ paper: classes.dialogPaper }}
         open={isOpenWitchPoison}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -1418,9 +1544,9 @@ const Game = (props) => {
         {
           (isMirror) && (
             <div style={{ transform: 'rotate(180deg)', borderTop: '1px solid #e0e0e0' }}>
-              <DialogTitle id="alert-dialog-title">{t('witch_poison')}</DialogTitle>
+              <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('witch_poison')}</DialogTitle>
               <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                   { 
                     (isUsePoison) ? (
                       // 你已使用毒藥
@@ -1450,9 +1576,9 @@ const Game = (props) => {
           )
         }
         <div>
-          <DialogTitle id="alert-dialog-title">{t('witch_poison')}</DialogTitle>
+          <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('witch_poison')}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
               { 
                 (isUsePoison) ? (
                   // 你已使用毒藥
@@ -1485,6 +1611,7 @@ const Game = (props) => {
       {/* Predictor Start */}
       <Dialog
         fullWidth
+        classes={{ paper: classes.dialogPaper }}
         open={isOpenPredictor}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -1492,9 +1619,9 @@ const Game = (props) => {
         {
           (isMirror) && (
             <div style={{ transform: 'rotate(180deg)', borderTop: '1px solid #e0e0e0' }}>
-              <DialogTitle id="alert-dialog-title">{t('predictor_select')}</DialogTitle>
+              <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('predictor_select')}</DialogTitle>
               <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                   { generateSelectPicker(PREDICTOR.key) }
                 </DialogContentText>
               </DialogContent>
@@ -1508,9 +1635,9 @@ const Game = (props) => {
           )
         }
         <div>
-          <DialogTitle id="alert-dialog-title">{t('predictor_select')}</DialogTitle>
+          <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('predictor_select')}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
               { generateSelectPicker(PREDICTOR.key) }
             </DialogContentText>
           </DialogContent>
@@ -1527,6 +1654,7 @@ const Game = (props) => {
       {/* Check Role Start */}
       <Dialog
         fullWidth
+        classes={{ paper: classes.dialogPaper }}
         open={isOpenRole}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -1534,9 +1662,9 @@ const Game = (props) => {
         {
           (isMirror) && (
             <div style={{ transform: 'rotate(180deg)', borderTop: '1px solid #e0e0e0' }}>
-              <DialogTitle id="alert-dialog-title">{t('role_result')}</DialogTitle>
+              <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('role_result')}</DialogTitle>
               <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                   {
                     (predictorSelect && predictorSelect.role.key === 'wolf') ? (
                       <span className={classes.bad}>{t('is_wolf')}</span>
@@ -1556,9 +1684,9 @@ const Game = (props) => {
           )
         }
         <div>
-          <DialogTitle id="alert-dialog-title">{t('role_result')}</DialogTitle>
+          <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('role_result')}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
               {
                 (predictorSelect && predictorSelect.role.key === 'wolf') ? (
                   <span className={classes.bad}>{t('is_wolf')}</span>
@@ -1581,6 +1709,7 @@ const Game = (props) => {
       {/* Result Start*/}
       <Dialog
         fullWidth
+        classes={{ paper: classes.dialogPaper }}
         open={isOpenResult}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -1588,7 +1717,7 @@ const Game = (props) => {
         {
           (isMirror) && (
             <div style={{ transform: 'rotate(180deg)', borderTop: '1px solid #e0e0e0' }}>
-              <DialogTitle id="alert-dialog-title">{t('yesterday_dead')}</DialogTitle>
+              <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('yesterday_dead')}</DialogTitle>
               <DialogContent>
                 <FormControlLabel
                   control={
@@ -1603,7 +1732,7 @@ const Game = (props) => {
                 />
                 {
                   (isShowMessage) && (
-                    <DialogContentText id="alert-dialog-description">
+                    <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                       <span className={classes.bad}>
                         { generateResultMessage() }
                       </span>
@@ -1621,7 +1750,7 @@ const Game = (props) => {
           )
         }
         <div>
-          <DialogTitle id="alert-dialog-title">{t('yesterday_dead')}</DialogTitle>
+          <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('yesterday_dead')}</DialogTitle>
           <DialogContent>
             <FormControlLabel
               control={
@@ -1636,7 +1765,7 @@ const Game = (props) => {
             />
             {
               (isShowMessage) && (
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                   <span className={classes.bad}>
                     { generateResultMessage() }
                   </span>
@@ -1657,6 +1786,7 @@ const Game = (props) => {
       { /* Vote Start */ }
       <Dialog
         fullWidth
+        classes={{ paper: classes.dialogPaper }}
         open={isOpenVote}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -1664,9 +1794,9 @@ const Game = (props) => {
         {
           (isMirror) && (
             <div style={{ transform: 'rotate(180deg)', borderTop: '1px solid #e0e0e0' }}>
-              <DialogTitle id="alert-dialog-title">{t('start_vote')}</DialogTitle>
+              <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('start_vote')}</DialogTitle>
               <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                   { generateSelectPicker('') }
                 </DialogContentText>
               </DialogContent>
@@ -1684,9 +1814,9 @@ const Game = (props) => {
           )
         }
         <div>
-          <DialogTitle id="alert-dialog-title">{t('start_vote')}</DialogTitle>
+          <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('start_vote')}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
               { generateSelectPicker('') }
             </DialogContentText>
           </DialogContent>
@@ -1707,6 +1837,7 @@ const Game = (props) => {
       { /* Game Result Start */ }
       <Dialog
         fullWidth
+        classes={{ paper: classes.dialogPaper }}
         open={isOpenGameResult}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -1714,9 +1845,9 @@ const Game = (props) => {
         {
           (isMirror) && (
             <div style={{ transform: 'rotate(180deg)', borderTop: '1px solid #e0e0e0' }}>
-              <DialogTitle id="alert-dialog-title">{t('game_over')}</DialogTitle>
+              <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('game_over')}</DialogTitle>
               <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                   { 
                     <span className={classes.good}>{gameResultMessage}</span>
                   }
@@ -1744,9 +1875,9 @@ const Game = (props) => {
           )
         }
         <div>
-          <DialogTitle id="alert-dialog-title">{t('game_over')}</DialogTitle>
+          <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('game_over')}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
               { 
                 <span className={classes.good}>{gameResultMessage}</span>
               }
@@ -1777,6 +1908,7 @@ const Game = (props) => {
       { /* Hunter Select Start */ }
       <Dialog
         fullWidth
+        classes={{ paper: classes.dialogPaper }}
         open={isOpenHunter}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -1784,9 +1916,9 @@ const Game = (props) => {
         {
           (isMirror) && (
             <div style={{ transform: 'rotate(180deg)', borderTop: '1px solid #e0e0e0' }}>
-              <DialogTitle id="alert-dialog-title">{t('hunter_shoot')}</DialogTitle>
+              <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('hunter_shoot')}</DialogTitle>
               <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                 { generateSelectPicker(HUNTER.key) }
                 </DialogContentText>
               </DialogContent>
@@ -1804,9 +1936,9 @@ const Game = (props) => {
           )
         }
         <div>
-          <DialogTitle id="alert-dialog-title">{t('hunter_shoot')}</DialogTitle>
+          <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('hunter_shoot')}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
             { generateSelectPicker(HUNTER.key) }
             </DialogContentText>
           </DialogContent>
@@ -1827,6 +1959,7 @@ const Game = (props) => {
       { /* Wolf King Select Start */ }
       <Dialog
         fullWidth
+        classes={{ paper: classes.dialogPaper }}
         open={isOpenWolfKingShoot}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -1834,9 +1967,9 @@ const Game = (props) => {
         {
           (isMirror) && (
             <div style={{ transform: 'rotate(180deg)', borderTop: '1px solid #e0e0e0' }}>
-              <DialogTitle id="alert-dialog-title">{t('wolf_king_shoot')}</DialogTitle>
+              <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('wolf_king_shoot')}</DialogTitle>
               <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                 { generateSelectPicker(WOLF_KING.key) }
                 </DialogContentText>
               </DialogContent>
@@ -1854,9 +1987,9 @@ const Game = (props) => {
           )
         }
         <div>
-          <DialogTitle id="alert-dialog-title">{t('wolf_king_shoot')}</DialogTitle>
+          <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('wolf_king_shoot')}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
             { generateSelectPicker(WOLF_KING.key) }
             </DialogContentText>
           </DialogContent>
@@ -1877,6 +2010,7 @@ const Game = (props) => {
       {/* Hunter Could Shoot Start */}
       <Dialog
         fullWidth
+        classes={{ paper: classes.dialogPaper }}
         open={isOpenHunterShoot}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -1884,9 +2018,9 @@ const Game = (props) => {
         {
           (isMirror) && (
             <div style={{ transform: 'rotate(180deg)', borderTop: '1px solid #e0e0e0' }}>
-              <DialogTitle id="alert-dialog-title">{t('could_shoot')}</DialogTitle>
+              <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('could_shoot')}</DialogTitle>
               <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                   {
                     (isKillByWitch) ? (
                       <span className={classes.bad}>{t('cant_shoot')}</span>
@@ -1906,9 +2040,9 @@ const Game = (props) => {
           )
         }
         <div>
-          <DialogTitle id="alert-dialog-title">{t('could_shoot')}</DialogTitle>
+          <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('could_shoot')}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
               {
                 (isKillByWitch) ? (
                   <span className={classes.bad}>{t('cant_shoot')}</span>
@@ -1931,6 +2065,7 @@ const Game = (props) => {
       {/* Last Words Start */}
       <Dialog
         fullWidth
+        classes={{ paper: classes.dialogPaper }}
         open={isOpenLastWords}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -1938,9 +2073,9 @@ const Game = (props) => {
         {
           (isMirror) && (
             <div style={{ transform: 'rotate(180deg)', borderTop: '1px solid #e0e0e0' }}>
-              <DialogTitle id="alert-dialog-title">{t('last_words')}</DialogTitle>
+              <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('last_words')}</DialogTitle>
               <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                   ...
                 </DialogContentText>
               </DialogContent>
@@ -1953,9 +2088,9 @@ const Game = (props) => {
           )
         }
         <div>
-          <DialogTitle id="alert-dialog-title">{t('last_words')}</DialogTitle>
+          <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('last_words')}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
               ...
             </DialogContentText>
           </DialogContent>
@@ -1971,6 +2106,7 @@ const Game = (props) => {
       {/* Knight Start */}
       <Dialog
         fullWidth
+        classes={{ paper: classes.dialogPaper }}
         open={isOpenKnight}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -1978,9 +2114,9 @@ const Game = (props) => {
         {
           (isMirror) && (
             <div style={{ transform: 'rotate(180deg)', borderTop: '1px solid #e0e0e0' }}>
-              <DialogTitle id="alert-dialog-title">{t('knight_fight')}</DialogTitle>
+              <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('knight_fight')}</DialogTitle>
               <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                   {
                     (isUseKnight) && (<li>{`${t('knight')}: ${list.find(role => role.role.key === KNIGHT.key).index}`}</li>)
                   }
@@ -1997,9 +2133,9 @@ const Game = (props) => {
           )
         }
         <div>
-          <DialogTitle id="alert-dialog-title">{t('knight_fight')}</DialogTitle>
+          <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('knight_fight')}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
               {
                 (isUseKnight) && (<li>{`${t('knight')}: ${list.find(role => role.role.key === KNIGHT.key).index}`}</li>)
               }
@@ -2019,6 +2155,7 @@ const Game = (props) => {
       {/* Knight Result Start */}
       <Dialog
         fullWidth
+        classes={{ paper: classes.dialogPaper }}
         open={isOpenKnightResult}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -2026,9 +2163,9 @@ const Game = (props) => {
         {
           (isMirror) && (
             <div style={{ transform: 'rotate(180deg)', borderTop: '1px solid #e0e0e0' }}>
-              <DialogTitle id="alert-dialog-title">{t('fight_result')}</DialogTitle>
+              <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('fight_result')}</DialogTitle>
               <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                   {
                     (knightSelect !== null) ? (
                       (knightSelect.role.key === WOLF.key) ? (
@@ -2052,9 +2189,9 @@ const Game = (props) => {
           )
         }
         <div>
-          <DialogTitle id="alert-dialog-title">{t('fight_result')}</DialogTitle>
+          <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('fight_result')}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
               {
                 (knightSelect !== null) ? (
                   (knightSelect.role.key === WOLF.key) ? (
@@ -2081,6 +2218,7 @@ const Game = (props) => {
       {/* Guard Start */}
       <Dialog
         fullWidth
+        classes={{ paper: classes.dialogPaper }}
         open={isOpenGuard}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -2088,9 +2226,9 @@ const Game = (props) => {
         {
           (isMirror) && (
             <div style={{ transform: 'rotate(180deg)', borderTop: '1px solid #e0e0e0' }}>
-              <DialogTitle id="alert-dialog-title">{t('guard_protect') || '守衛請守護'}</DialogTitle>
+              <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('guard_protect') || '守衛請守護'}</DialogTitle>
               <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                   { generateSelectPicker(GUARD.key) }
                 </DialogContentText>
               </DialogContent>
@@ -2104,9 +2242,9 @@ const Game = (props) => {
           )
         }
         <div>
-          <DialogTitle id="alert-dialog-title">{t('guard_protect') || '守衛請守護'}</DialogTitle>
+          <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('guard_protect') || '守衛請守護'}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
               { generateSelectPicker(GUARD.key) }
             </DialogContentText>
           </DialogContent>
@@ -2123,6 +2261,7 @@ const Game = (props) => {
       {/* idiot Result Start */}
       <Dialog
         fullWidth
+        classes={{ paper: classes.dialogPaper }}
         open={isOpenidiotResult}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -2130,9 +2269,9 @@ const Game = (props) => {
         {
           (isMirror) && (
             <div style={{ transform: 'rotate(180deg)', borderTop: '1px solid #e0e0e0' }}>
-              <DialogTitle id="alert-dialog-title">{t('idiot_result')}</DialogTitle>
+              <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('idiot_result')}</DialogTitle>
               <DialogContent>
-                <DialogContentText id="alert-dialog-description">
+                <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                   {
                     (selectVote !== null) ? (
                       t('no_is_idiot', { index: selectVote.index })
@@ -2152,9 +2291,9 @@ const Game = (props) => {
           )
         }
         <div>
-          <DialogTitle id="alert-dialog-title">{t('idiot_result')}</DialogTitle>
+          <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('idiot_result')}</DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
               {
                 (selectVote !== null) ? (
                   t('no_is_idiot', { index: selectVote.index })

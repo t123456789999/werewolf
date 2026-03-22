@@ -9,7 +9,7 @@ export const WOLF_KING = {
   key: 'wolf_king',
   isGood: false,
   isGod: true, // Special wolf
-  src: 'wolf.jpg',
+  src: 'wolf_king.jpg',
 };
 
 export const PREDICTOR = {
@@ -58,5 +58,5 @@ export const GUARD = {
   key: 'guard',
   isGood: true,
   isGod: true,
-  src: 'knight.jpg',
+  src: 'guard.jpg',
 };
