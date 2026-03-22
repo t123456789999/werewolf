@@ -140,6 +140,34 @@ const Setting = (props) => {
     );
   };
 
+  const handleStartGame = () => {
+    // 1. 控管神職數量
+    let godCount = 0;
+    if (isUsePredictor) godCount++;
+    if (isUseWitch) godCount++;
+    if (isUseHunter) godCount++;
+    if (isUseGuard) godCount++;
+    if (isUseKnight) godCount++;
+    if (isUseidiot) godCount++;
+
+    const maxGods = playerNumber - wolfNumber;
+    if (godCount > maxGods) {
+      alert(`神職選取過多！${playerNumber}人局且有${wolfNumber}隻狼時，神職最多只能選 ${maxGods} 個。 (目前選了 ${godCount} 個)`);
+      return;
+    }
+
+    // 2. 控管特殊狼人數量
+    let specialWolfCount = 0;
+    if (isUseWolfKing) specialWolfCount++;
+
+    if (specialWolfCount > wolfNumber) {
+      alert(`特殊狼人選取過多！狼人總數只有 ${wolfNumber} 隻，特殊狼人不能超過這個數量。`);
+      return;
+    }
+
+    handleStart();
+  };
+
   return (
     <Fragment>
       <Paper className={classes.root}>
@@ -243,7 +271,7 @@ const Setting = (props) => {
         <div style={{ textAlign: 'center' }}>
           <Button 
             className={classes.finishedBtn}
-            onClick={handleStart} 
+            onClick={handleStartGame} 
             variant="contained"
           >
             {t('finished')}
