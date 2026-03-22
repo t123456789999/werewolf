@@ -276,6 +276,8 @@ const Game = (props) => {
   const [messages, setMessages] = useState([]); // 遊戲訊息
   const [isUseWolfKingSkill, setIsUseWolfKingSkill] = useState(false); // 狼王是否已使用技能
   const [isOpenWolfKingShoot, setIsOpenWolfKingShoot] = useState(false); // 狼王射殺視窗
+  const [isOpenWolfExplode, setIsOpenWolfExplode] = useState(false); // 狼人自爆視窗
+  const [wolfExplodeSelect, setWolfExplodeSelect] = useState(null); // 狼人自爆選擇
 
   const [isOpenVote, setIsOpenVote] = useState(false); // 投票視窗
   const [selectVote, setSelectVote] = useState(null); // 選擇投票的人
@@ -797,6 +799,11 @@ const Game = (props) => {
         selectValue = guardProtect;
         selectFunc = setGuardProtect;
         break;
+      // 狼人自爆
+      case 'wolf_explode':
+        selectValue = wolfExplodeSelect;
+        selectFunc = setWolfExplodeSelect;
+        break;
       // 一般投票
       default:
         selectValue = selectVote;
@@ -865,6 +872,34 @@ const Game = (props) => {
       isWolfKing = dead.some(tmp => tmp.role.key === WOLF_KING.key);
     }
     return isWolfKing;
+  }
+
+  /**
+   * handleWolfExplode
+   * 狼人自爆
+   */
+  const handleWolfExplode = () => {
+    setIsOpenWolfExplode(false);
+    
+    const tmpDead = [
+      ...dead,
+      wolfExplodeSelect,
+    ];
+    setDead(tmpDead);
+
+    setMessages([
+      ...messages,
+      `${t('n_day', { day })}${t('wolf_explode')}: ${wolfExplodeSelect.index}`,
+    ]);
+
+    const result = checkGameFinished(tmpDead);
+    if (result.isFinished) {
+      setIsOpenGameResult(true);
+      setGameResultMessage(result.message);
+    } else {
+      // 自爆後直接進入下一晚，不進遺言
+      initSelect(true);
+    }
   }
 
   /**
@@ -989,13 +1024,7 @@ const Game = (props) => {
       }
     }
 
-    // 4. 判斷壞人是否獲勝：狼人數量 >= 好人數量
-    if (aliveWolves >= aliveGoodGuys) {
-      return {
-        isFinished: true,
-        message: t('bad_win'),
-      }
-    }
+    // 4. 判斷壞人是否獲勝：不再自動判定人數相等獲勝 (由狼人自爆或屠邊邏輯決定)
 
     // 5. 判斷是否有屠邊局 (如果有開啟 isKillKind)
     if (isKillKind) {
@@ -1344,6 +1373,13 @@ const Game = (props) => {
                   className={classes.actionBtn}
                 >
                   { t('start_vote') }
+                </Button>
+                <Button 
+                  onClick={() => (setIsOpenWolfExplode(true))} 
+                  variant="contained" 
+                  className={classes.actionBtn}
+                >
+                  { t('wolf_explode') }
                 </Button>
               </>
             )
@@ -2189,6 +2225,55 @@ const Game = (props) => {
         </div>
       </Dialog>
       {/* Guard End */}
+
+      {/* Wolf Explode Start */}
+      <Dialog
+        fullWidth
+        classes={{ paper: classes.dialogPaper }}
+        open={isOpenWolfExplode}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        {
+          (isMirror) && (
+            <div style={{ transform: 'rotate(180deg)', borderTop: '1px solid #e0e0e0' }}>
+              <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('wolf_explode')}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
+                  { generateSelectPicker('wolf_explode') }
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={() => setIsOpenWolfExplode(false)} color="primary" variant="outlined">
+                  { t('no') }
+                </Button>
+                <Button disabled={wolfExplodeSelect === null} onClick={handleWolfExplode} color="primary" variant="contained">
+                  { t('confirm') }
+                  <CheckIcon />
+                </Button>
+              </DialogActions>
+            </div>
+          )
+        }
+        <div>
+          <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('wolf_explode')}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
+              { generateSelectPicker('wolf_explode') }
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setIsOpenWolfExplode(false)} color="primary" variant="outlined">
+              { t('no') }
+            </Button>
+            <Button disabled={wolfExplodeSelect === null} onClick={handleWolfExplode} color="primary" variant="contained">
+              { t('confirm') }
+              <CheckIcon />
+            </Button>
+          </DialogActions>
+        </div>
+      </Dialog>
+      {/* Wolf Explode End */}
 
       {/* idiot Result Start */}
       <Dialog
