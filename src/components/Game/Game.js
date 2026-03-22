@@ -36,33 +36,33 @@ import {
   WOLF_KING,
 } from '../../constants/Role';
 
-import step1 from '../../static/audio/step_1.mp3'; // 天黑請閉眼
-import step2 from '../../static/audio/step_2.mp3'; // 狼人現身請睜眼
-import step3 from '../../static/audio/step_3.mp3'; // 狼人確認彼此的身份
-import step4 from '../../static/audio/step_4.mp3'; // 狼人請殺人
-import step5 from '../../static/audio/step_5.mp3'; // 狼人請閉眼
-import step6 from '../../static/audio/step_6.mp3'; // 女巫請睜眼
-import step7 from '../../static/audio/step_7.mp3'; // 這位玩家被殺死了
-import step8 from '../../static/audio/step_8.mp3'; // 你要使用解藥嗎
-import step9 from '../../static/audio/step_9.mp3'; // 你要使用毒藥嗎
-import step10 from '../../static/audio/step_10.mp3'; // 你要毒誰呢
-import step11 from '../../static/audio/step_11.mp3'; // 女巫請閉眼
-import step12 from '../../static/audio/step_12.mp3'; // 預言家請睜眼
-import step13 from '../../static/audio/step_13.mp3'; // 你要查驗的對象是
-import step14 from '../../static/audio/step_14.mp3'; // 他的身份是
-import step15 from '../../static/audio/step_15.mp3'; // 預言家請閉眼
-import step16 from '../../static/audio/step_16.mp3'; // 獵人請睜眼
-import step17 from '../../static/audio/step_17.mp3'; // 獵人請閉眼
-import step18 from '../../static/audio/step_18.mp3'; // 騎士請睜眼
-import step19 from '../../static/audio/step_19.mp3'; // 騎士請閉眼
-import step20 from '../../static/audio/step_20.mp3'; // 白癡請睜眼
-import step21 from '../../static/audio/step_21.mp3'; // 白癡請閉眼
-import step22 from '../../static/audio/step_22.mp3'; // 天亮請睜眼
+import night_start from '../../static/audio/night_start.mp3'; // 天黑請閉眼
+import wolf_open from '../../static/audio/wolf_open.mp3'; // 狼人現身請睜眼
+import wolf_check from '../../static/audio/wolf_check.mp3'; // 狼人確認彼此的身份
+import wolf_kill from '../../static/audio/wolf_kill.mp3'; // 狼人請殺人
+import wolf_close from '../../static/audio/wolf_close.mp3'; // 狼人請閉眼
+import witch_open from '../../static/audio/witch_open.mp3'; // 女巫請睜眼
+import witch_dead_info from '../../static/audio/witch_dead_info.mp3'; // 這位玩家被殺死了
+import witch_save from '../../static/audio/witch_save.mp3'; // 你要使用解藥嗎
+import witch_poison from '../../static/audio/witch_poison.mp3'; // 你要使用毒藥嗎
+import witch_poison_select from '../../static/audio/witch_poison_select.mp3'; // 你要毒誰呢
+import witch_close from '../../static/audio/witch_close.mp3'; // 女巫請閉眼
+import predictor_open from '../../static/audio/predictor_open.mp3'; // 預言家請睜眼
+import predictor_check from '../../static/audio/predictor_check.mp3'; // 你要查驗的對象是
+import predictor_result from '../../static/audio/predictor_result.mp3'; // 他的身份是
+import predictor_close from '../../static/audio/predictor_close.mp3'; // 預言家請閉眼
+import hunter_open from '../../static/audio/hunter_open.mp3'; // 獵人請睜眼
+import hunter_close from '../../static/audio/hunter_close.mp3'; // 獵人請閉眼
+import knight_open from '../../static/audio/knight_open.mp3'; // 騎士請睜眼
+import knight_close from '../../static/audio/knight_close.mp3'; // 騎士請閉眼
+import idiot_open from '../../static/audio/idiot_open.mp3'; // 白癡請睜眼
+import idiot_close from '../../static/audio/idiot_close.mp3'; // 白癡請閉眼
+import day_break from '../../static/audio/day_break.mp3'; // 天亮請睜眼
 
-// 新增守衛語音 (請替換為正確的檔案)
-const step30 = step1; // 守衛請睜眼
-const step31 = step1; // 你要守護的對象是
-const step32 = step1; // 守衛請閉眼
+// 守衛語音
+import guard_open from '../../static/audio/guard_open.mp3'; // 守衛請睜眼
+import guard_select from '../../static/audio/guard_select.mp3'; // 你要守護的對象是
+import guard_close from '../../static/audio/guard_close.mp3'; // 守衛請閉眼
 
 /**
  * IS_DEBUG
@@ -513,79 +513,79 @@ const Game = (props) => {
 
     switch(step) {
       case 1:
-        returnSrc = step1;
+        returnSrc = night_start;
         break;
       case 2:
-        returnSrc = step2;
+        returnSrc = wolf_open;
         break;
       case 3:
-        returnSrc = step3;
+        returnSrc = wolf_check;
         break;
       case 4:
-        returnSrc = step4;
+        returnSrc = wolf_kill;
         break;
       case 5:
-        returnSrc = step5;
+        returnSrc = wolf_close;
         break;
       case 6:
-        returnSrc = step6;
+        returnSrc = witch_open;
         break;
       case 7:
-        returnSrc = step7;
+        returnSrc = witch_dead_info;
         break;
       case 8:
-        returnSrc = step8;
+        returnSrc = witch_save;
         break;
       case 9:
-        returnSrc = step9;
+        returnSrc = witch_poison;
         break;
       case 10:
-        returnSrc = step10;
+        returnSrc = witch_poison_select;
         break;
       case 11:
-        returnSrc = step11;
+        returnSrc = witch_close;
         break;
       case 12:
-        returnSrc = step12;
+        returnSrc = predictor_open;
         break;
       case 13:
-        returnSrc = step13;
+        returnSrc = predictor_check;
         break;
       case 14:
-        returnSrc = step14;
+        returnSrc = predictor_result;
         break;
       case 15:
-        returnSrc = step15;
+        returnSrc = predictor_close;
         break;
       case 16:
-        returnSrc = step16;
+        returnSrc = hunter_open;
         break;
       case 17:
-        returnSrc = step17;
+        returnSrc = hunter_close;
         break;
       case 18:
-        returnSrc = step18;
+        returnSrc = knight_open;
         break;
       case 19:
-          returnSrc = step19;
-          break;
+        returnSrc = knight_close;
+        break;
       case 20:
-        returnSrc = step20;
+        returnSrc = idiot_open;
         break;
       case 21:
-        returnSrc = step21;
+        returnSrc = idiot_close;
         break;
       case 22:
-        returnSrc = step22;
+        returnSrc = day_break;
         break;
       case 30:
-        returnSrc = step30;
+        returnSrc = guard_open;
         break;
       case 31:
-        returnSrc = step31;
+        returnSrc = guard_select;
         break;
       case 32:
-        returnSrc = step32;
+        returnSrc = guard_close;
         break;
       default:
         break;
