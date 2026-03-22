@@ -55,8 +55,8 @@ const useStyles = makeStyles(theme => ({
       marginTop: theme.spacing(3),
       padding: '5px',
       '& option': {
-        backgroundColor: '#1a1a1a', // 深黑底
-        color: '#fff', // 純白字
+        backgroundColor: '#fff', // 改為白底
+        color: '#000', // 黑字
       },
     },
   },

@@ -1139,6 +1139,7 @@ const Game = (props) => {
     setSelectVote(null); // 投票選擇
     setIsUse(false);
     setIsUseSaveTonight(false);
+    setIsKillByWitch(false);
     setHunterSelect(null); // 獵人選擇
     setKnightSelect(null); // 騎士選擇
     setGuardProtect(null); // 守衛選擇歸零 (注意 lastGuardProtect 不歸零)

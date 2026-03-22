@@ -92,13 +92,13 @@ const Home = (props) => {
   const [list, setList] = useState([]);
   const [playerNumber, setPlayerNumber] = useState(6);
   const [wolfNumber, setWolfNumber] = useState(2);
-  const [isUsePredictor, setIsUsePredictor] = useState(false);
+  const [isUsePredictor, setIsUsePredictor] = useState(true);
   const [isUseWitch, setIsUseWitch] = useState(true);
   const [isUseHunter, setIsUseHunter] = useState(false);
   const [isUseKnight, setIsUseKnight] = useState(false);
   const [isUseidiot, setIsUseidiot] = useState(false);
   const [isUseGuard, setIsUseGuard] = useState(false);
-  const [isUseWolfKing, setIsUseWolfKing] = useState(false);
+  const [isUseWolfKing, setIsUseWolfKing] = useState(true);
   const [isKillKind, setIsKillKind] = useState(false); // 屠邊局判斷
   const [isMirror, setIsMirror] = useState(true); // modal 是否開啟鏡像
 
