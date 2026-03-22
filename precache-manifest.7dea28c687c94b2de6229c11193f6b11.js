@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b217967f528ecc30cbfd90cbf157393b",
+    "revision": "dc3d2a2c060c6bf4b399037278acfe18",
     "url": "/werewolf/index.html"
   },
   {
-    "revision": "20659104637d08b367c7",
+    "revision": "7fb32f9ce467027153d9",
     "url": "/werewolf/static/css/main.7eac0109.chunk.css"
   },
   {
-    "revision": "fa0919f46792ae1377ce",
-    "url": "/werewolf/static/js/2.f42116c8.chunk.js"
+    "revision": "f6dd162886844605c1ed",
+    "url": "/werewolf/static/js/2.73931445.chunk.js"
   },
   {
-    "revision": "20659104637d08b367c7",
-    "url": "/werewolf/static/js/main.19b7d0b7.chunk.js"
+    "revision": "7fb32f9ce467027153d9",
+    "url": "/werewolf/static/js/main.6574225b.chunk.js"
   },
   {
     "revision": "8961eb29beb599689901",
@@ -54,14 +54,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "0ab2f1162f894dd63b037bd88506bff1",
     "url": "/werewolf/static/media/idiot.0ab2f116.jpg"
-  },
-  {
-    "revision": "05bbb86fcca3ba8673c267cdb19332a3",
-    "url": "/werewolf/static/media/idiot_close.05bbb86f.mp3"
-  },
-  {
-    "revision": "6c44e2a0c4df348741ba30e9261590ef",
-    "url": "/werewolf/static/media/idiot_open.6c44e2a0.mp3"
   },
   {
     "revision": "73b24415abd6e479fbc62ae2d91291c2",
