@@ -56,6 +56,12 @@ import hunter_open from '../../static/audio/hunter_open.mp3'; // 獵人請睜眼
 import hunter_close from '../../static/audio/hunter_close.mp3'; // 獵人請閉眼
 import day_break from '../../static/audio/day_break.mp3'; // 天亮請睜眼
 
+// 騎士、白癡語音
+import knight_open from '../../static/audio/knight_open.mp3';
+import knight_close from '../../static/audio/knight_close.mp3';
+import idiot_open from '../../static/audio/idiot_open.mp3';
+import idiot_close from '../../static/audio/idiot_close.mp3';
+
 // 守衛語音
 import guard_open from '../../static/audio/guard_open.mp3'; // 守衛請睜眼
 import guard_select from '../../static/audio/guard_select.mp3'; // 你要守護的對象是
@@ -434,6 +440,28 @@ const Game = (props) => {
         }
         break;
       case 17:
+        if (isUseKnight) {
+          setStep(18);
+        } else if (isUseidiot) {
+          setStep(20);
+        } else {
+          setStep(22);
+        }
+        break;
+      case 18:
+        setStep(19);
+        break;
+      case 19:
+        if (isUseidiot) {
+          setStep(20);
+        } else {
+          setStep(22);
+        }
+        break;
+      case 20:
+        setStep(21);
+        break;
+      case 21:
         setStep(22);
         break;
       case 22:
@@ -608,6 +636,18 @@ const Game = (props) => {
         break;
       case 17:
         returnSrc = hunter_close;
+        break;
+      case 18:
+        returnSrc = knight_open;
+        break;
+      case 19:
+        returnSrc = knight_close;
+        break;
+      case 20:
+        returnSrc = idiot_open;
+        break;
+      case 21:
+        returnSrc = idiot_close;
         break;
       case 22:
         returnSrc = day_break;
@@ -2148,7 +2188,7 @@ const Game = (props) => {
                 <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                   {
                     (knightSelect !== null) ? (
-                      (knightSelect.role.key === WOLF.key) ? (
+                      (knightSelect.role.key === WOLF.key || knightSelect.role.key === WOLF_KING.key) ? (
                         <span className={classes.bad}>{t('no_is_wolf', { index: knightSelect.index })}</span>
                       ) : (
                         <span className={classes.good}>{t('no_is_not_wolf', { index: knightSelect.index })}</span>
@@ -2174,7 +2214,7 @@ const Game = (props) => {
             <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
               {
                 (knightSelect !== null) ? (
-                  (knightSelect.role.key === WOLF.key) ? (
+                  (knightSelect.role.key === WOLF.key || knightSelect.role.key === WOLF_KING.key) ? (
                     <span className={classes.bad}>{t('no_is_wolf', { index: knightSelect.index })}</span>
                   ) : (
                     <span className={classes.good}>{t('no_is_not_wolf', { index: knightSelect.index })}</span>
