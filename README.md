@@ -1,6 +1,7 @@
 # 狼人殺自動法官V2.0
 
 This project refers to [狼人殺法官](https://github.com/JaeyoLin/wolf_judge)
+
 v2.0: 新增守衛和狼王以及優化UI/UX by gemini-3-flash-preview
 
 ## 網頁
