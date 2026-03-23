@@ -1,35 +1,35 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f02d4909b24703b0e9dd4ed5e256ebf0",
+    "revision": "12131713fd608fbe1db9d7303c2a232b",
     "url": "/werewolf/index.html"
   },
   {
-    "revision": "12d94ced5b37c7205f4b",
+    "revision": "3e2db2afa33f3da4495f",
     "url": "/werewolf/static/css/main.7eac0109.chunk.css"
   },
   {
-    "revision": "a46b9e6006ce3a6c5c23",
-    "url": "/werewolf/static/js/2.b6dfa23e.chunk.js"
+    "revision": "bc1fb377af5a71a74849",
+    "url": "/werewolf/static/js/2.d1e51fab.chunk.js"
   },
   {
-    "revision": "12d94ced5b37c7205f4b",
-    "url": "/werewolf/static/js/main.d6f8ef41.chunk.js"
+    "revision": "3e2db2afa33f3da4495f",
+    "url": "/werewolf/static/js/main.72e6d106.chunk.js"
   },
   {
     "revision": "8961eb29beb599689901",
     "url": "/werewolf/static/js/runtime~main.a2214e6e.js"
   },
   {
-    "revision": "1ed5ce0ebcf032b273775e749b28e309",
-    "url": "/werewolf/static/media/Gemini_Generated_Image_r2awygr2awygr2aw.1ed5ce0e.png"
-  },
-  {
     "revision": "a7d9ef5f0acbc4b5dc0c5f771ffba06a",
     "url": "/werewolf/static/media/day_break.a7d9ef5f.mp3"
   },
   {
-    "revision": "74f8c166b3cd02b8112a8a6f20748848",
-    "url": "/werewolf/static/media/guard.74f8c166.jpg"
+    "revision": "279ecce94404c293f2d5e8d01cdb214f",
+    "url": "/werewolf/static/media/ghost_wolf.279ecce9.png"
+  },
+  {
+    "revision": "67322da187ca261bb01048113c60880a",
+    "url": "/werewolf/static/media/guard.67322da1.png"
   },
   {
     "revision": "5e15bee53762419e4e9b353362dfa5b1",
@@ -44,8 +44,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/werewolf/static/media/guard_select.05f93647.mp3"
   },
   {
-    "revision": "be95e9aeb762dacb5416e3ec5e5203ba",
-    "url": "/werewolf/static/media/hunter.be95e9ae.jpg"
+    "revision": "4b6b76bee4791357f9d9b12e4dc61719",
+    "url": "/werewolf/static/media/hunter.4b6b76be.png"
   },
   {
     "revision": "e7d96e3ea530616711d3406526f5bdfd",
@@ -56,8 +56,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/werewolf/static/media/hunter_open.99894c39.mp3"
   },
   {
-    "revision": "0ab2f1162f894dd63b037bd88506bff1",
-    "url": "/werewolf/static/media/idiot.0ab2f116.jpg"
+    "revision": "bef74074b5684c32837b74a3c01f3a9b",
+    "url": "/werewolf/static/media/idiot.bef74074.png"
   },
   {
     "revision": "05bbb86fcca3ba8673c267cdb19332a3",
@@ -68,12 +68,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/werewolf/static/media/idiot_open.6c44e2a0.mp3"
   },
   {
-    "revision": "41c50d81c3414e59a404456296940e02",
-    "url": "/werewolf/static/media/king.41c50d81.png"
-  },
-  {
-    "revision": "73b24415abd6e479fbc62ae2d91291c2",
-    "url": "/werewolf/static/media/knight.73b24415.jpg"
+    "revision": "7e839e68cc48dd026e7189a04f72518a",
+    "url": "/werewolf/static/media/knight.7e839e68.png"
   },
   {
     "revision": "75d0a097188a359d642add9e433e81ff",
@@ -86,10 +82,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "6751b7d19d3a29f71b61bd0a8cef6265",
     "url": "/werewolf/static/media/night_start.6751b7d1.mp3"
-  },
-  {
-    "revision": "927ae322d866ae0d6a1034bcd77c00d6",
-    "url": "/werewolf/static/media/predictor.927ae322.jpg"
   },
   {
     "revision": "488a98a430ee4dbe3e857a164f1b0195",
@@ -108,12 +100,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/werewolf/static/media/predictor_result.02591e0a.mp3"
   },
   {
-    "revision": "ad3496efcc00965663794fe4f5c5e1aa",
-    "url": "/werewolf/static/media/villager.ad3496ef.jpg"
+    "revision": "c934f1e470cc9e14f50c047c23a57114",
+    "url": "/werewolf/static/media/seer.c934f1e4.png"
   },
   {
-    "revision": "a80e9820b79d9a6d50c24ae238938df8",
-    "url": "/werewolf/static/media/witch.a80e9820.jpg"
+    "revision": "f9b757929c4b623dc0b723d64bcea9d0",
+    "url": "/werewolf/static/media/villager.f9b75792.png"
+  },
+  {
+    "revision": "37b66866386ed5396fb872b81c653868",
+    "url": "/werewolf/static/media/witch.37b66866.png"
   },
   {
     "revision": "9f00d56d19144d3c2c0ac142418a4393",
@@ -136,8 +132,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/werewolf/static/media/witch_poison_select.b4e6486e.mp3"
   },
   {
-    "revision": "23c75bef489f1964a9627e6adab7116d",
-    "url": "/werewolf/static/media/wolf.23c75bef.jpg"
+    "revision": "c41efa0c7e7aaebbe5014d3010decbd0",
+    "url": "/werewolf/static/media/wolf.c41efa0c.png"
   },
   {
     "revision": "3f6f4aa3d8273c38b432938e5ad3f8f6",
@@ -152,12 +148,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/werewolf/static/media/wolf_kill.a75253e4.mp3"
   },
   {
-    "revision": "29ed25a328229862abcc543b8e8584b1",
-    "url": "/werewolf/static/media/wolf_king.29ed25a3.jpg"
-  },
-  {
-    "revision": "01c918813536734918d3c878563a687c",
-    "url": "/werewolf/static/media/wolf_knight.01c91881.jpg"
+    "revision": "2d4db427950b9900ef785b8f1244e4ef",
+    "url": "/werewolf/static/media/wolf_king.2d4db427.png"
   },
   {
     "revision": "264c120e03b1bd33f61c71cb75554f20",
