@@ -1024,7 +1024,13 @@ const Game = (props) => {
       }
     }
 
-    // 4. 判斷壞人是否獲勝：不再自動判定人數相等獲勝 (由狼人自爆或屠邊邏輯決定)
+    // 4. 判斷壞人是否獲勝：當女巫毒藥已經使用或是場上沒有守衛，狼人數量>=好人數量，邪惡陣營獲勝
+    if ((isUsePoison || !isUseGuard || isGuardDead) && aliveWolves >= aliveGoodGuys) {
+      return {
+        isFinished: true,
+        message: t('bad_win'),
+      }
+    }
 
     // 5. 判斷是否有屠邊局 (如果有開啟 isKillKind)
     if (isKillKind) {
@@ -1269,7 +1275,7 @@ const Game = (props) => {
     setIsOpenKnightResult(false);
     let tmpDead = [];
 
-    if (knightSelect !== null && knightSelect.role.key === WOLF.key) {
+    if (knightSelect !== null && (knightSelect.role.key === WOLF.key || knightSelect.role.key === WOLF_KING.key)) {
       tmpDead = [
         ...dead,
         knightSelect,
@@ -1302,7 +1308,17 @@ const Game = (props) => {
       setIsOpenGameResult(true);
       setGameResultMessage(result.message);
     } else {
-      initSelect(true);
+      // 檢查獵人和狼王是否死亡
+      const isHunter = checkHunter(tmpDead);
+      const isWolfKing = checkWolfKing(tmpDead);
+
+      if (isHunter) {
+        setIsOpenHunter(true);
+      } else if (isWolfKing) {
+        setIsOpenWolfKingShoot(true);
+      } else {
+        initSelect(true);
+      }
     }
   }
 
