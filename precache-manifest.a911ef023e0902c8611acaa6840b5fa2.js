@@ -1,23 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9ec203bf6dfd273f434bb0f8986f35f6",
+    "revision": "f02d4909b24703b0e9dd4ed5e256ebf0",
     "url": "/werewolf/index.html"
   },
   {
-    "revision": "7bb4aa71913b23b529d8",
+    "revision": "12d94ced5b37c7205f4b",
     "url": "/werewolf/static/css/main.7eac0109.chunk.css"
   },
   {
-    "revision": "bc1fb377af5a71a74849",
-    "url": "/werewolf/static/js/2.d1e51fab.chunk.js"
+    "revision": "a46b9e6006ce3a6c5c23",
+    "url": "/werewolf/static/js/2.b6dfa23e.chunk.js"
   },
   {
-    "revision": "7bb4aa71913b23b529d8",
-    "url": "/werewolf/static/js/main.9dcd043b.chunk.js"
+    "revision": "12d94ced5b37c7205f4b",
+    "url": "/werewolf/static/js/main.d6f8ef41.chunk.js"
   },
   {
     "revision": "8961eb29beb599689901",
     "url": "/werewolf/static/js/runtime~main.a2214e6e.js"
+  },
+  {
+    "revision": "1ed5ce0ebcf032b273775e749b28e309",
+    "url": "/werewolf/static/media/Gemini_Generated_Image_r2awygr2awygr2aw.1ed5ce0e.png"
   },
   {
     "revision": "a7d9ef5f0acbc4b5dc0c5f771ffba06a",
@@ -62,6 +66,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "6c44e2a0c4df348741ba30e9261590ef",
     "url": "/werewolf/static/media/idiot_open.6c44e2a0.mp3"
+  },
+  {
+    "revision": "41c50d81c3414e59a404456296940e02",
+    "url": "/werewolf/static/media/king.41c50d81.png"
   },
   {
     "revision": "73b24415abd6e479fbc62ae2d91291c2",
