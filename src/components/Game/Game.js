@@ -55,14 +55,10 @@ import predictor_close from '../../static/audio/predictor_close.mp3'; // 預言�
 import hunter_open from '../../static/audio/hunter_open.mp3'; // 獵人請睜眼
 import hunter_close from '../../static/audio/hunter_close.mp3'; // 獵人請閉眼
 import day_break from '../../static/audio/day_break.mp3'; // 天亮請睜眼
-
-// 騎士、白癡語音
-import knight_open from '../../static/audio/knight_open.mp3';
-import knight_close from '../../static/audio/knight_close.mp3';
-import idiot_open from '../../static/audio/idiot_open.mp3';
-import idiot_close from '../../static/audio/idiot_close.mp3';
-
-// 守衛語音
+import knight_open from '../../static/audio/knight_open.mp3'; // 騎士請睜眼
+import knight_close from '../../static/audio/knight_close.mp3'; // 騎士請閉眼
+import idiot_open from '../../static/audio/idiot_open.mp3'; // 白癡請睜眼
+import idiot_close from '../../static/audio/idiot_close.mp3'; // 白癡請閉眼
 import guard_open from '../../static/audio/guard_open.mp3'; // 守衛請睜眼
 import guard_select from '../../static/audio/guard_select.mp3'; // 你要守護的對象是
 import guard_close from '../../static/audio/guard_close.mp3'; // 守衛請閉眼
