@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d4d420a89ccf8692945726e25f04bb43",
+    "revision": "697afcde24574151780677d47d05f424",
     "url": "/werewolf/index.html"
   },
   {
-    "revision": "f8390b1d4391f1dfed41",
+    "revision": "c01b0addd907b8400ebb",
     "url": "/werewolf/static/css/main.7eac0109.chunk.css"
   },
   {
-    "revision": "8c744bee60631c65048e",
-    "url": "/werewolf/static/js/2.6c444db0.chunk.js"
+    "revision": "8827d68e42588bc9f86a",
+    "url": "/werewolf/static/js/2.14b9b861.chunk.js"
   },
   {
-    "revision": "f8390b1d4391f1dfed41",
-    "url": "/werewolf/static/js/main.ff8bd01c.chunk.js"
+    "revision": "c01b0addd907b8400ebb",
+    "url": "/werewolf/static/js/main.a8beec66.chunk.js"
   },
   {
     "revision": "8961eb29beb599689901",
@@ -22,6 +22,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "a7d9ef5f0acbc4b5dc0c5f771ffba06a",
     "url": "/werewolf/static/media/day_break.a7d9ef5f.mp3"
+  },
+  {
+    "revision": "279ecce94404c293f2d5e8d01cdb214f",
+    "url": "/werewolf/static/media/ghost_wolf.279ecce9.png"
   },
   {
     "revision": "67322da187ca261bb01048113c60880a",
