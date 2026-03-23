@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "318a980cc5a2bc6ee228073c6aa8c11e",
+    "revision": "91f29c41f14ce0afa339ccf50b025762",
     "url": "/werewolf/index.html"
   },
   {
-    "revision": "8278f539930888580608",
+    "revision": "3323a9c872ac8b088115",
     "url": "/werewolf/static/css/main.7eac0109.chunk.css"
   },
   {
-    "revision": "f6dd162886844605c1ed",
-    "url": "/werewolf/static/js/2.73931445.chunk.js"
+    "revision": "0e6dc253a596ee9e8fac",
+    "url": "/werewolf/static/js/2.8c36d2c7.chunk.js"
   },
   {
-    "revision": "8278f539930888580608",
-    "url": "/werewolf/static/js/main.4347acef.chunk.js"
+    "revision": "3323a9c872ac8b088115",
+    "url": "/werewolf/static/js/main.4a976b87.chunk.js"
   },
   {
     "revision": "8961eb29beb599689901",
@@ -96,8 +96,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/werewolf/static/media/witch_close.9f00d56d.mp3"
   },
   {
-    "revision": "f17ffeba69cb07ab81cbe6f61d851c3d",
-    "url": "/werewolf/static/media/witch_dead_info.f17ffeba.mp3"
+    "revision": "ee4fdc149b311e20a99d501e747262bf",
+    "url": "/werewolf/static/media/witch_dead_info.ee4fdc14.mp3"
   },
   {
     "revision": "dc038730b4bdfe123d349daa02329645",
@@ -110,10 +110,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "b4e6486eb6ed9002de20c439f6802ad2",
     "url": "/werewolf/static/media/witch_poison_select.b4e6486e.mp3"
-  },
-  {
-    "revision": "4898a6d4e7a751300e9f721892d7000a",
-    "url": "/werewolf/static/media/witch_save.4898a6d4.mp3"
   },
   {
     "revision": "23c75bef489f1964a9627e6adab7116d",
