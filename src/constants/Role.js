@@ -60,3 +60,10 @@ export const GUARD = {
   isGod: true,
   src: 'guard.png',
 };
+
+export const GHOST_WEREWOLF = {
+  key: 'ghost_wolf',
+  isGood: false,
+  isGod: true, // Special wolf
+  src: 'ghost_wolf.png',
+};

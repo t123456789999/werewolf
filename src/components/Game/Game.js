@@ -36,6 +36,7 @@ import {
   VILLAGER,
   GUARD,
   WOLF_KING,
+  GHOST_WEREWOLF,
 } from '../../constants/Role';
 
 import night_start from '../../static/audio/night_start.mp3'; // 天黑請閉眼
@@ -311,6 +312,8 @@ const Game = (props) => {
   const [isUseidiotSkill, setIsUseidiotSkill] = useState(false); // 白癡是否使用技能
 
   const [isShowMessage, setIsShowMessage] = useState(false); // 是否顯示夜晚訊息
+  const [hasRetaliated, setHasRetaliated] = useState(false); // 惡靈騎士是否已發動過反傷
+  const [retaliatedPlayer, setRetaliatedPlayer] = useState(null); // 被反傷的對象 (預言家或女巫)
 
   // console.log('isKillByWitch', isKillByWitch);
   // console.log('isUsePoison', isUsePoison);
@@ -535,12 +538,20 @@ const Game = (props) => {
     if (!isPoison) {
       setWitchDeadNumber(null);
     } else {
-      // 使用毒藥, 判斷是不是毒到獵人或狼王
-      if (IS_DEBUG) {
-        console.log('witchDeadNumber.role.key', witchDeadNumber.role.key);
-      }
-      if (witchDeadNumber !== null && (witchDeadNumber.role.key === HUNTER.key || witchDeadNumber.role.key === WOLF_KING.key)) {
-        setIsKillByWitch(true);
+      // 使用毒藥, 判斷是不是毒到惡靈騎士
+      if (witchDeadNumber !== null && witchDeadNumber.role.key === GHOST_WEREWOLF.key) {
+        if (!hasRetaliated) {
+          setHasRetaliated(true);
+          const witchPlayer = list.find(p => p.role.key === WITCH.key);
+          setRetaliatedPlayer(witchPlayer);
+        }
+        // 惡靈騎士被毒不會死
+        setWitchDeadNumber(null);
+      } else {
+        // 使用毒藥, 判斷是不是毒到獵人或狼王
+        if (witchDeadNumber !== null && (witchDeadNumber.role.key === HUNTER.key || witchDeadNumber.role.key === WOLF_KING.key)) {
+          setIsKillByWitch(true);
+        }
       }
     }
   }
@@ -564,6 +575,15 @@ const Game = (props) => {
   const handleCloseCheckRole = () => {
     setIsOpenRols(false);
     setStep(15);
+
+    // 查驗惡靈騎士觸發反傷
+    if (predictorSelect && predictorSelect.role.key === GHOST_WEREWOLF.key) {
+      if (!hasRetaliated) {
+        setHasRetaliated(true);
+        const predictorPlayer = list.find(p => p.role.key === PREDICTOR.key);
+        setRetaliatedPlayer(predictorPlayer);
+      }
+    }
   }
 
   /**
@@ -711,26 +731,33 @@ const Game = (props) => {
 
     // 狼人殺的人
     if (deadNumber !== null) {
-      const isProtected = guardProtect && guardProtect.index === deadNumber.index;
-      const isSaved = isUseSaveTonight;
+      // 惡靈騎士不能被狼人殺死
+      if (deadNumber.role.key !== GHOST_WEREWOLF.key) {
+        const isProtected = guardProtect && guardProtect.index === deadNumber.index;
+        const isSaved = isUseSaveTonight;
 
-      if (isProtected && isSaved) {
-        // 同守同救 = 死亡
-        nightlyDead.push(deadNumber);
-      } else if (!isProtected && !isSaved) {
-        // 沒守沒救 = 死亡
-        nightlyDead.push(deadNumber);
+        if (isProtected && isSaved) {
+          // 同守同救 = 死亡
+          nightlyDead.push(deadNumber);
+        } else if (!isProtected && !isSaved) {
+          // 沒守沒救 = 死亡
+          nightlyDead.push(deadNumber);
+        }
       }
-      // isProtected && !isSaved => 平安
-      // !isProtected && isSaved => 平安
     }
 
-    // 女巫毒的人
+    // 女巫毒的人 (惡靈騎士被毒不會死，邏輯已在 handleWitchPoison 處理)
     if (witchDeadNumber !== null) {
-      // 毒人無視守衛
       // 檢查是否跟狼人殺的是同一個，避免重複加入
       if (!nightlyDead.some(p => p.index === witchDeadNumber.index)) {
         nightlyDead.push(witchDeadNumber);
+      }
+    }
+
+    // 惡靈騎士反傷的人
+    if (retaliatedPlayer !== null) {
+      if (!nightlyDead.some(p => p.index === retaliatedPlayer.index)) {
+        nightlyDead.push(retaliatedPlayer);
       }
     }
 
@@ -1037,8 +1064,8 @@ const Game = (props) => {
     // 2. 統計人數
     let deadWolf = 0;
     dead.forEach((p) => {
-      // 狼王與普通狼人皆計入狼人陣營
-      if (p.role.key === WOLF.key || p.role.key === WOLF_KING.key) {
+      // 狼王, 惡靈騎士與普通狼人皆計入狼人陣營
+      if (p.role.key === WOLF.key || p.role.key === WOLF_KING.key || p.role.key === GHOST_WEREWOLF.key) {
         deadWolf += 1;
       }
     });
@@ -1118,17 +1145,27 @@ const Game = (props) => {
     
     let currentDead = [...dead];
     if (isShoot) {
-      currentDead = [
-        ...dead,
-        hunterSelect,
-      ];
+      // 惡靈騎士如果是被獵人晚上射殺 (例如狼人殺獵人，獵人開槍)，惡靈騎士不死
+      if (dayType === DAY_TYPE.NIGHT && hunterSelect.role.key === GHOST_WEREWOLF.key) {
+        // 不死，但獵人技能已發動
+        const shooter = list.find(tmp => tmp.role.key === HUNTER.key);
+        setMessages([
+          ...messages,
+          t('hunter_shoot_player', { shooterIndex: shooter ? shooter.index : '?', index: hunterSelect.index }) + " (免疫)"
+        ]);
+      } else {
+        currentDead = [
+          ...dead,
+          hunterSelect,
+        ];
 
-      setDead(currentDead);
-      const shooter = list.find(tmp => tmp.role.key === HUNTER.key);
-      setMessages([
-        ...messages,
-        t('hunter_shoot_player', { shooterIndex: shooter ? shooter.index : '?', index: hunterSelect.index })
-      ]);
+        setDead(currentDead);
+        const shooter = list.find(tmp => tmp.role.key === HUNTER.key);
+        setMessages([
+          ...messages,
+          t('hunter_shoot_player', { shooterIndex: shooter ? shooter.index : '?', index: hunterSelect.index })
+        ]);
+      }
     }
 
     const result = checkGameFinished(currentDead);
@@ -1312,7 +1349,7 @@ const Game = (props) => {
     setIsUseKnightSkill(true);
     setIsOpenKnightResult(false);
     let tmpDead = [];
-    const isHitWolf = knightSelect !== null && (knightSelect.role.key === WOLF.key || knightSelect.role.key === WOLF_KING.key);
+    const isHitWolf = knightSelect !== null && (knightSelect.role.key === WOLF.key || knightSelect.role.key === WOLF_KING.key || knightSelect.role.key === GHOST_WEREWOLF.key);
 
     if (isHitWolf) {
       tmpDead = [
@@ -1688,7 +1725,7 @@ const Game = (props) => {
               <DialogContent>
                 <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                   {
-                    (predictorSelect && (predictorSelect.role.key === WOLF.key || predictorSelect.role.key === WOLF_KING.key)) ? (
+                    (predictorSelect && (predictorSelect.role.key === WOLF.key || predictorSelect.role.key === WOLF_KING.key || predictorSelect.role.key === GHOST_WEREWOLF.key)) ? (
                       <span className={classes.bad}>{t('is_wolf')}</span>
                     ) : (
                       <span className={classes.good}>{t('not_wolf')}</span>
@@ -1710,7 +1747,7 @@ const Game = (props) => {
           <DialogContent>
             <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
             {
-            (predictorSelect && (predictorSelect.role.key === WOLF.key || predictorSelect.role.key === WOLF_KING.key)) ? (
+            (predictorSelect && (predictorSelect.role.key === WOLF.key || predictorSelect.role.key === WOLF_KING.key || predictorSelect.role.key === GHOST_WEREWOLF.key)) ? (
               <span className={classes.bad}>{t('is_wolf')}</span>
             ) : (
               <span className={classes.good}>{t('not_wolf')}</span>
@@ -2189,7 +2226,7 @@ const Game = (props) => {
                 <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                   {
                     (knightSelect !== null) ? (
-                      (knightSelect.role.key === WOLF.key || knightSelect.role.key === WOLF_KING.key) ? (
+                      (knightSelect.role.key === WOLF.key || knightSelect.role.key === WOLF_KING.key || knightSelect.role.key === GHOST_WEREWOLF.key) ? (
                         <span className={classes.bad}>{t('no_is_wolf', { index: knightSelect.index })}</span>
                       ) : (
                         <span className={classes.good}>{t('no_is_not_wolf', { index: knightSelect.index })}</span>
@@ -2215,7 +2252,7 @@ const Game = (props) => {
             <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
               {
                 (knightSelect !== null) ? (
-                  (knightSelect.role.key === WOLF.key || knightSelect.role.key === WOLF_KING.key) ? (
+                  (knightSelect.role.key === WOLF.key || knightSelect.role.key === WOLF_KING.key || knightSelect.role.key === GHOST_WEREWOLF.key) ? (
                     <span className={classes.bad}>{t('no_is_wolf', { index: knightSelect.index })}</span>
                   ) : (
                     <span className={classes.good}>{t('no_is_not_wolf', { index: knightSelect.index })}</span>

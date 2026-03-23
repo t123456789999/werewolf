@@ -26,6 +26,7 @@ import knight from '../../static/images/knight.png';
 import idiot from '../../static/images/idiot.png';
 import villager from '../../static/images/villager.png';
 import guard from '../../static/images/guard.png';
+import ghost_wolf from '../../static/images/ghost_wolf.png';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -136,6 +137,7 @@ const RoleCard = (props) => {
     case 'idiot': src = idiot; break;
     case 'villager': src = villager; break;
     case 'guard': src = guard; break;
+    case 'ghost_wolf': src = ghost_wolf; break;
     default: src = villager; break;
   };
 

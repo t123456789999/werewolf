@@ -26,9 +26,11 @@ import knight from '../../static/images/knight.png';
 import idiot from '../../static/images/idiot.png';
 import villager from '../../static/images/villager.png';
 import guard from '../../static/images/guard.png';
+import ghost_wolf from '../../static/images/ghost_wolf.png';
 
 import {
   WOLF_KING,
+  GHOST_WEREWOLF,
   PREDICTOR,
   WITCH,
   HUNTER,
@@ -184,6 +186,8 @@ const Setting = (props) => {
     setIsUseGuard,
     isUseWolfKing,
     setIsUseWolfKing,
+    isUseGhostWolf,
+    setIsUseGhostWolf,
     isMirror,
     setIsMirror,
   } = props;
@@ -193,6 +197,7 @@ const Setting = (props) => {
     switch(role.key) {
       case 'wolf': roleImg = wolf; break;
       case 'wolf_king': roleImg = wolf_king; break;
+      case 'ghost_wolf': roleImg = ghost_wolf; break;
       case 'predictor': roleImg = predictor; break;
       case 'witch': roleImg = witch; break;
       case 'hunter': roleImg = hunter; break;
@@ -242,6 +247,7 @@ const Setting = (props) => {
     // 2. 控管特殊狼人數量
     let specialWolfCount = 0;
     if (isUseWolfKing) specialWolfCount++;
+    if (isUseGhostWolf) specialWolfCount++;
 
     if (specialWolfCount > wolfNumber) {
       alert(`特殊狼人選取過多！狼人總數只有 ${wolfNumber} 隻，特殊狼人不能超過這個數量。`);
@@ -321,6 +327,13 @@ const Setting = (props) => {
               role={WOLF_KING} 
               isUsed={isUseWolfKing} 
               toggleFunc={setIsUseWolfKing} 
+            />
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <RoleCard 
+              role={GHOST_WEREWOLF} 
+              isUsed={isUseGhostWolf} 
+              toggleFunc={setIsUseGhostWolf} 
             />
           </Grid>
         </Grid>

@@ -22,6 +22,7 @@ import CachedIcon from '@material-ui/icons/Cached';
 import {
   WOLF,
   WOLF_KING,
+  GHOST_WEREWOLF,
   PREDICTOR,
   WITCH,
   HUNTER,
@@ -99,6 +100,7 @@ const Home = (props) => {
   const [isUseidiot, setIsUseidiot] = useState(false);
   const [isUseGuard, setIsUseGuard] = useState(false);
   const [isUseWolfKing, setIsUseWolfKing] = useState(true);
+  const [isUseGhostWolf, setIsUseGhostWolf] = useState(false);
   const [isKillKind, setIsKillKind] = useState(false); // 屠邊局判斷
   const [isMirror, setIsMirror] = useState(true); // modal 是否開啟鏡像
 
@@ -147,8 +149,27 @@ const Home = (props) => {
       };
     }
 
+    // 惡靈騎士位置
+    if (isUseGhostWolf) {
+      let index = null;
+
+      beginning: while(true) {
+        index = getRaddomIndex();
+        if(list[index] !== null) {
+          continue beginning;
+        } else {
+          break;
+        }
+      }
+
+      list[index] = {
+        index: index + 1,
+        role: GHOST_WEREWOLF,
+      };
+    }
+
     // 狼人位置
-    for (let i = 0 ; i < (isUseWolfKing ? wolfNumber - 1 : wolfNumber) ; i += 1) {
+    for (let i = 0 ; i < (isUseWolfKing ? (isUseGhostWolf ? wolfNumber - 2 : wolfNumber - 1) : (isUseGhostWolf ? wolfNumber - 1 : wolfNumber)) ; i += 1) {
       let index = null;
 
       beginning: while(true) {
@@ -374,6 +395,8 @@ const Home = (props) => {
                 setIsUseGuard={setIsUseGuard}
                 isUseWolfKing={isUseWolfKing}
                 setIsUseWolfKing={setIsUseWolfKing}
+                isUseGhostWolf={isUseGhostWolf}
+                setIsUseGhostWolf={setIsUseGhostWolf}
                 isMirror={isMirror}
                 setIsMirror={setIsMirror}
               />
@@ -403,6 +426,7 @@ const Home = (props) => {
                 setIsUseidiot={setIsUseidiot}
                 isUseGuard={isUseGuard}
                 isUseWolfKing={isUseWolfKing}
+                isUseGhostWolf={isUseGhostWolf}
                 isMirror={isMirror}
               />
             )
