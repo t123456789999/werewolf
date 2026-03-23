@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b231ffc62db7bdbc373c59d0e69ab378",
+    "revision": "f7392be3b7aa3d16875a6c7258f8bdeb",
     "url": "/werewolf/index.html"
   },
   {
-    "revision": "9ad332b00db0e73183b0",
+    "revision": "41931b05e5b7dfbaadb2",
     "url": "/werewolf/static/css/main.7eac0109.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/werewolf/static/js/2.d1e51fab.chunk.js"
   },
   {
-    "revision": "9ad332b00db0e73183b0",
-    "url": "/werewolf/static/js/main.0ebb3cf4.chunk.js"
+    "revision": "41931b05e5b7dfbaadb2",
+    "url": "/werewolf/static/js/main.db9e4913.chunk.js"
   },
   {
     "revision": "8961eb29beb599689901",
@@ -84,6 +84,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/werewolf/static/media/night_start.6751b7d1.mp3"
   },
   {
+    "revision": "c934f1e470cc9e14f50c047c23a57114",
+    "url": "/werewolf/static/media/predictor.c934f1e4.png"
+  },
+  {
     "revision": "488a98a430ee4dbe3e857a164f1b0195",
     "url": "/werewolf/static/media/predictor_check.488a98a4.mp3"
   },
@@ -98,10 +102,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "02591e0a1894c2f4fb717f13a0860bb7",
     "url": "/werewolf/static/media/predictor_result.02591e0a.mp3"
-  },
-  {
-    "revision": "c934f1e470cc9e14f50c047c23a57114",
-    "url": "/werewolf/static/media/seer.c934f1e4.png"
   },
   {
     "revision": "f9b757929c4b623dc0b723d64bcea9d0",
