@@ -19,7 +19,7 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
 import wolf from '../../static/images/wolf.png';
 import wolf_king from '../../static/images/wolf_king.png';
-import predictor from '../../static/images/seer.png';
+import predictor from '../../static/images/predictor.png';
 import witch from '../../static/images/witch.png';
 import hunter from '../../static/images/hunter.png';
 import knight from '../../static/images/knight.png';
