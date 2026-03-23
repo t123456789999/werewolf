@@ -1,11 +1,11 @@
-# 狼人殺自動法官V2
+# 狼人殺自動法官V2.0
 
-This project refers to [狼人殺法官](https://github.com/JaeyoLin/wolf_judge).
-Vibe coding 新增角色和優化UI/UX。
+This project refers to [狼人殺法官](https://github.com/JaeyoLin/wolf_judge)
+v2.0: 新增守衛和狼王以及優化UI/UX by gemini-3-flash-preview
 
 ## 網頁
 
-- [遊戲頁面]([https://jaeyolin.github.io/wolf_judge/](https://t123456789999.github.io/werewolf/)
+- [遊戲頁面](https://t123456789999.github.io/werewolf/)
 
 ## 功能特色
 
@@ -16,14 +16,14 @@ Vibe coding 新增角色和優化UI/UX。
 ## 角色
 
 - 神職
-- -預言家
-- -女巫
-- -獵人
-- -騎士
-- -白癡
-- -守衛
+  - 預言家
+  - 女巫
+  - 獵人
+  - 騎士
+  - 守衛
+  - 白癡
 - 狼人
-- -狼王
+  - 狼王
 
 >警長競選規則可以自己加進去玩, 跟自動法官沒什麼關係.
 
