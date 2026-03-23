@@ -17,13 +17,23 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import clsx from 'clsx';
 
+import wolf from '../../static/images/wolf.png';
+import wolf_king from '../../static/images/wolf_king.png';
+import predictor from '../../static/images/predictor.png';
+import witch from '../../static/images/witch.png';
+import hunter from '../../static/images/hunter.png';
+import knight from '../../static/images/knight.png';
+import idiot from '../../static/images/idiot.png';
+import villager from '../../static/images/villager.png';
+import guard from '../../static/images/guard.png';
+
 import {
   WOLF_KING,
   PREDICTOR,
   WITCH,
   HUNTER,
   KNIGHT,
-  idiot,
+  idiot as IDIOT_ROLE,
   GUARD,
 } from '../../constants/Role';
 
@@ -179,7 +189,19 @@ const Setting = (props) => {
   } = props;
 
   const RoleCard = ({ role, isUsed, toggleFunc }) => {
-    const roleImg = require(`../../static/images/${role.src}`);
+    let roleImg = null;
+    switch(role.key) {
+      case 'wolf': roleImg = wolf; break;
+      case 'wolf_king': roleImg = wolf_king; break;
+      case 'predictor': roleImg = predictor; break;
+      case 'witch': roleImg = witch; break;
+      case 'hunter': roleImg = hunter; break;
+      case 'knight': roleImg = knight; break;
+      case 'idiot': roleImg = idiot; break;
+      case 'villager': roleImg = villager; break;
+      case 'guard': roleImg = guard; break;
+      default: roleImg = villager; break;
+    }
     return (
       <Card 
         className={clsx(classes.card, isUsed && classes.cardSelected)}
@@ -188,7 +210,7 @@ const Setting = (props) => {
         <CardActionArea>
           <CardMedia
             className={classes.cardMedia}
-            image={roleImg.default || roleImg}
+            image={roleImg}
             title={t(role.key)}
           />
           <CardContent className={classes.cardTitle}>
@@ -324,7 +346,7 @@ const Setting = (props) => {
             <RoleCard role={KNIGHT} isUsed={isUseKnight} toggleFunc={setIsUseKnight} />
           </Grid>
           <Grid item xs={4} sm={2}>
-            <RoleCard role={idiot} isUsed={isUseidiot} toggleFunc={setIsUseidiot} />
+            <RoleCard role={IDIOT_ROLE} isUsed={isUseidiot} toggleFunc={setIsUseidiot} />
           </Grid>
         </Grid>
 
