@@ -44,7 +44,7 @@ import wolf_check from '../../static/audio/wolf_check.mp3'; // 狼人確認彼�
 import wolf_kill from '../../static/audio/wolf_kill.mp3'; // 狼人請殺人
 import wolf_close from '../../static/audio/wolf_close.mp3'; // 狼人請閉眼
 import witch_open from '../../static/audio/witch_open.mp3'; // 女巫請睜眼
-import witch_save from '../../static/audio/witch_dead_info.mp3'; // 你要使用解藥嗎
+import witch_dead_info from '../../static/audio/witch_dead_info.mp3'; // 你要使用解藥嗎
 import witch_poison from '../../static/audio/witch_poison.mp3'; // 你要使用毒藥嗎
 import witch_poison_select from '../../static/audio/witch_poison_select.mp3'; // 你要毒誰呢
 import witch_close from '../../static/audio/witch_close.mp3'; // 女巫請閉眼
