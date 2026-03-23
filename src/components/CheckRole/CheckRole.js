@@ -17,15 +17,15 @@ import Grid from '@material-ui/core/Grid';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
-import wolf from '../../static/images/wolf.jpg';
-import wolf_king from '../../static/images/wolf_king.jpg';
-import predictor from '../../static/images/predictor.jpg';
-import witch from '../../static/images/witch.jpg';
-import hunter from '../../static/images/hunter.jpg';
-import knight from '../../static/images/knight.jpg';
-import idiot from '../../static/images/idiot.jpg';
-import villager from '../../static/images/villager.jpg';
-import guard from '../../static/images/guard.jpg';
+import wolf from '../../static/images/wolf.png';
+import wolf_king from '../../static/images/wolf_king.png';
+import predictor from '../../static/images/seer.png';
+import witch from '../../static/images/witch.png';
+import hunter from '../../static/images/hunter.png';
+import knight from '../../static/images/knight.png';
+import idiot from '../../static/images/idiot.png';
+import villager from '../../static/images/villager.png';
+import guard from '../../static/images/guard.png';
 
 const useStyles = makeStyles(theme => ({
   container: {

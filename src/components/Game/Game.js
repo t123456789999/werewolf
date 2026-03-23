@@ -340,18 +340,16 @@ const Game = (props) => {
         // 是否有使用女巫
         if (isUseWitch) {
           setStep(6);
+        } else if (isUsePredictor) {
+          setStep(12);
+        } else if (isUseHunter) {
+          setStep(16);
+        } else if (isUseKnight) {
+          setStep(18);
+        } else if (isUseidiot) {
+          setStep(20);
         } else {
-          // 是否使用預言家
-          if (isUsePredictor) {
-            setStep(12);
-          } else {
-            if (isUseHunter) {
-              // 是否使用獵人
-              setStep(16);
-            } else {
-              setStep(22);
-            }
-          }
+          setStep(22);
         }
         break;
       case 6:
@@ -388,15 +386,15 @@ const Game = (props) => {
         // 是否使用預言家
         if (isUsePredictor) {
           setStep(12);
+        } else if (isUseHunter) {
+          setStep(16);
+        } else if (isUseKnight) {
+          setStep(18);
+        } else if (isUseidiot) {
+          setStep(20);
         } else {
-          if (isUseHunter) {
-            // 是否使用獵人
-            setStep(16);
-          } else {
-            setStep(22);
-          }
+          setStep(22);
         }
-        // setStep(12);
         break;
       case 12:
         setStep(13);
@@ -422,6 +420,10 @@ const Game = (props) => {
         if (isUseHunter) {
           // 是否使用獵人
           setStep(16);
+        } else if (isUseKnight) {
+          setStep(18);
+        } else if (isUseidiot) {
+          setStep(20);
         } else {
           setStep(22);
         }
@@ -444,25 +446,24 @@ const Game = (props) => {
           setStep(22);
         }
         break;
-      case 18:
-        case 18: // Knight Open finished
+      case 18: // Knight Open finished
         setTimeout(() => {
           setStep(19); // Move to Knight Close
         }, 2000);
         break;
-      case 19:
+      case 19: // Knight Close finished
         if (isUseidiot) {
           setStep(20);
         } else {
           setStep(22);
         }
         break;
-      case 20:
+      case 20: // Idiot Open finished
         setTimeout(() => {
-          setStep(21); // Move to Knight Close
+          setStep(21); // Move to Idiot Close
         }, 2000);
         break;
-      case 21:
+      case 21: // Idiot Close finished
         setStep(22);
         break;
       case 22:
