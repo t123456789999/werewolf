@@ -2,61 +2,61 @@ export const WOLF = {
   key: 'wolf',
   isGood: false,
   isGod: false,
-  src: 'wolf.jpg',
+  src: 'wolf.png',
 };
 
 export const WOLF_KING = {
   key: 'wolf_king',
   isGood: false,
   isGod: true, // Special wolf
-  src: 'wolf_king.jpg',
+  src: 'wolf_king.png',
 };
 
 export const PREDICTOR = {
   key: 'predictor',
   isGood: true,
   isGod: true,
-  src: 'predictor.jpg',
+  src: 'predictor.png',
 };
 
 export const WITCH = {
   key: 'witch',
   isGood: true,
   isGod: true,
-  src: 'witch.jpg',
+  src: 'witch.png',
 };
 
 export const HUNTER = {
   key: 'hunter',
   isGood: true,
   isGod: true,
-  src: 'hunter.jpg',
+  src: 'hunter.png',
 };
 
 export const KNIGHT = {
   key: 'knight',
   isGood: true,
   isGod: true,
-  src: 'knight.jpg',
+  src: 'knight.png',
 };
 
 export const idiot = {
   key: 'idiot',
   isGood: true,
   isGod: true,
-  src: 'idiot.jpg',
+  src: 'idiot.png',
 };
 
 export const VILLAGER = {
   key: 'villager',
   isGood: true,
   isGod: false,
-  src: 'villager.jpg',
+  src: 'villager.png',
 };
 
 export const GUARD = {
   key: 'guard',
   isGood: true,
   isGod: true,
-  src: 'guard.jpg',
+  src: 'guard.png',
 };

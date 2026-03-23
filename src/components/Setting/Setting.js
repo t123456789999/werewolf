@@ -29,70 +29,123 @@ import {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(3, 2),
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    color: '#fff',
+    padding: theme.spacing(4, 3),
+    backgroundColor: '#dcb07a', // Kraft paper color
+    backgroundImage: 'radial-gradient(#c29a6a 1px, transparent 0)',
+    backgroundSize: '20px 20px',
+    color: '#3e2723', // Dark brown text
     marginTop: '20px',
+    borderRadius: '8px',
+    boxShadow: 'inset 0 0 100px rgba(0,0,0,0.2), 0 10px 30px rgba(0,0,0,0.3)',
+    fontFamily: '"Times New Roman", serif',
   },
   sectionTitle: {
-    marginBottom: theme.spacing(2),
-    color: '#ffeb3b',
+    marginBottom: theme.spacing(3),
+    color: '#3e2723',
     fontWeight: 'bold',
-    borderLeft: '5px solid #ffeb3b',
-    paddingLeft: theme.spacing(2),
+    borderBottom: '2px solid #8d6e63',
+    paddingBottom: theme.spacing(1),
+    textTransform: 'uppercase',
+    letterSpacing: '2px',
+    textAlign: 'center',
   },
   formControl: {
     margin: theme.spacing(1),
     minWidth: '100%',
     '& label': {
-      color: '#ffeb3b', // 改為亮黃色，與背景完全區隔
+      color: '#3e2723',
       fontWeight: 'bold',
       fontSize: '1.1rem',
     },
+    '& .MuiInput-underline:before': {
+      borderBottomColor: '#8d6e63',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#3e2723',
+    },
     '& select': {
-      color: '#fff',
-      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+      color: '#3e2723',
+      backgroundColor: 'rgba(255, 255, 255, 0.15)',
       marginTop: theme.spacing(3),
-      padding: '5px',
+      padding: '8px',
+      borderRadius: '4px',
       '& option': {
-        backgroundColor: '#fff', // 改為白底
-        color: '#000', // 黑字
+        backgroundColor: '#dcb07a',
+        color: '#3e2723',
       },
     },
   },
   card: {
-    maxWidth: 150,
-    margin: '10px auto',
-    backgroundColor: '#333',
-    color: '#fff',
-    transition: '0.3s',
-    border: '2px solid transparent',
+    maxWidth: 160,
+    margin: '15px auto',
+    backgroundColor: '#f5e6d3', // Light parchment
+    color: '#3e2723',
+    transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+    border: '4px solid #8d6e63',
+    borderRadius: '12px',
+    boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+    position: 'relative',
+    overflow: 'visible',
+    '&:hover': {
+      transform: 'translateY(-10px) rotate(2deg)',
+      boxShadow: '0 15px 30px rgba(0,0,0,0.4)',
+    },
   },
   cardSelected: {
-    borderColor: '#ffeb3b',
-    boxShadow: '0 0 15px #ffeb3b',
-    transform: 'scale(1.05)',
+    borderColor: '#b71c1c', // Wax seal red
+    boxShadow: '0 0 20px rgba(183, 28, 28, 0.4)',
+    transform: 'scale(1.08) !important',
+    '&:after': {
+      content: '"✓"',
+      position: 'absolute',
+      top: '-15px',
+      right: '-15px',
+      width: '40px',
+      height: '40px',
+      backgroundColor: '#b71c1c',
+      color: '#fff',
+      borderRadius: '50%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: '24px',
+      fontWeight: 'bold',
+      boxShadow: '0 2px 5px rgba(0,0,0,0.3)',
+      zIndex: 10,
+    }
   },
   cardMedia: {
-    height: 140,
-    backgroundSize: 'contain',
+    height: 160,
+    backgroundSize: 'cover',
+    borderBottom: '2px solid #8d6e63',
   },
   cardTitle: {
-    fontSize: '0.9rem',
+    fontSize: '1rem',
+    fontWeight: 'bold',
     textAlign: 'center',
-    padding: '8px 4px !important',
+    padding: '12px 4px !important',
+    backgroundColor: '#f5e6d3',
   },
   finishedBtn: {
-    marginTop: '40px',
+    marginTop: '50px',
     marginBottom: '40px',
-    padding: '10px 50px',
-    fontSize: '1.2rem',
-    background: 'linear-gradient(45deg, #f44336 30%, #ffeb3b 90%)',
+    padding: '12px 60px',
+    fontSize: '1.4rem',
+    background: '#b71c1c', // Crimson red like a wax seal
     color: 'white',
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    borderRadius: '50px',
+    fontWeight: 'bold',
+    boxShadow: '0 10px 20px rgba(0,0,0,0.3)',
+    border: '2px solid #8d6e63',
+    transition: 'all 0.3s',
+    '&:hover': {
+      background: '#d32f2f',
+      transform: 'scale(1.05)',
+      boxShadow: '0 15px 25px rgba(0,0,0,0.4)',
+    },
   },
   gridContainer: {
-    marginBottom: theme.spacing(4),
+    marginBottom: theme.spacing(6),
   }
 }));
 
