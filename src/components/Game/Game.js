@@ -445,7 +445,10 @@ const Game = (props) => {
         }
         break;
       case 18:
-        setStep(19);
+        case 18: // Knight Open finished
+        setTimeout(() => {
+          setStep(19); // Move to Knight Close
+        }, 2000);
         break;
       case 19:
         if (isUseidiot) {
@@ -455,7 +458,9 @@ const Game = (props) => {
         }
         break;
       case 20:
-        setStep(21);
+        setTimeout(() => {
+          setStep(21); // Move to Knight Close
+        }, 2000);
         break;
       case 21:
         setStep(22);
@@ -1421,13 +1426,6 @@ const Game = (props) => {
                   className={classes.actionBtn}
                 >
                   { t('start_vote') }
-                </Button>
-                <Button 
-                  onClick={() => (setIsOpenWolfExplode(true))} 
-                  variant="contained" 
-                  className={classes.actionBtn}
-                >
-                  { t('wolf_explode') }
                 </Button>
               </>
             )
