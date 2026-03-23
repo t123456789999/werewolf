@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "2ac265fdb66a9d5236b67b1f0d611c1a",
+    "revision": "9ec203bf6dfd273f434bb0f8986f35f6",
     "url": "/werewolf/index.html"
   },
   {
-    "revision": "fe64a00f03e62e096019",
+    "revision": "7bb4aa71913b23b529d8",
     "url": "/werewolf/static/css/main.7eac0109.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/werewolf/static/js/2.d1e51fab.chunk.js"
   },
   {
-    "revision": "fe64a00f03e62e096019",
-    "url": "/werewolf/static/js/main.ae094e66.chunk.js"
+    "revision": "7bb4aa71913b23b529d8",
+    "url": "/werewolf/static/js/main.9dcd043b.chunk.js"
   },
   {
     "revision": "8961eb29beb599689901",
