@@ -1311,8 +1311,9 @@ const Game = (props) => {
     setIsUseKnightSkill(true);
     setIsOpenKnightResult(false);
     let tmpDead = [];
+    const isHitWolf = knightSelect !== null && (knightSelect.role.key === WOLF.key || knightSelect.role.key === WOLF_KING.key);
 
-    if (knightSelect !== null && (knightSelect.role.key === WOLF.key || knightSelect.role.key === WOLF_KING.key)) {
+    if (isHitWolf) {
       tmpDead = [
         ...dead,
         knightSelect,
@@ -1345,16 +1346,21 @@ const Game = (props) => {
       setIsOpenGameResult(true);
       setGameResultMessage(result.message);
     } else {
-      // 檢查獵人和狼王是否死亡
-      const isHunter = checkHunter(tmpDead);
-      const isWolfKing = checkWolfKing(tmpDead);
+      if (isHitWolf) {
+        // 撞到狼人：狼人出局，檢查技能後立刻進入夜晚
+        const isHunter = checkHunter(tmpDead);
+        const isWolfKing = checkWolfKing(tmpDead);
 
-      if (isHunter) {
-        setIsOpenHunter(true);
-      } else if (isWolfKing) {
-        setIsOpenWolfKingShoot(true);
+        if (isHunter) {
+          setIsOpenHunter(true);
+        } else if (isWolfKing) {
+          setIsOpenWolfKingShoot(true);
+        } else {
+          initSelect(true);
+        }
       } else {
-        initSelect(true);
+        // 撞到好人：騎士以死謝罪，繼續投票放逐 (留在白天)
+        initSelect(false);
       }
     }
   }
