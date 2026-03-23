@@ -1,4 +1,4 @@
-# 狼人殺自動法官V2.0
+# 狼人殺自動法官v2.0
 
 This project refers to [狼人殺法官](https://github.com/JaeyoLin/wolf_judge)
 
