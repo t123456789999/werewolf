@@ -1060,8 +1060,8 @@ const Game = (props) => {
       }
     }
 
-    // 4. 判斷壞人是否獲勝：當女巫毒藥已經使用或是場上沒有守衛，狼人數量>=好人數量，邪惡陣營獲勝
-    if ((isUsePoison || !isUseGuard || isGuardDead) && aliveWolves >= aliveGoodGuys) {
+    // 4. 判斷壞人是否獲勝：當女巫毒藥已經使用、女巫死亡或是場上沒有守衛、守衛死亡，狼人數量>=好人數量，邪惡陣營獲勝
+    if ((isWitchDead || isUsePoison || !isUseGuard || isGuardDead) && aliveWolves >= aliveGoodGuys) {
       return {
         isFinished: true,
         message: t('bad_win'),
