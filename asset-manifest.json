@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/werewolf/static/css/main.7eac0109.chunk.css",
-    "main.js": "/werewolf/static/js/main.a8beec66.chunk.js",
-    "main.js.map": "/werewolf/static/js/main.a8beec66.chunk.js.map",
+    "main.js": "/werewolf/static/js/main.3da3db04.chunk.js",
+    "main.js.map": "/werewolf/static/js/main.3da3db04.chunk.js.map",
     "runtime~main.js": "/werewolf/static/js/runtime~main.a2214e6e.js",
     "runtime~main.js.map": "/werewolf/static/js/runtime~main.a2214e6e.js.map",
     "static/js/2.14b9b861.chunk.js": "/werewolf/static/js/2.14b9b861.chunk.js",
     "static/js/2.14b9b861.chunk.js.map": "/werewolf/static/js/2.14b9b861.chunk.js.map",
     "index.html": "/werewolf/index.html",
-    "precache-manifest.412b7311aef8239a6f41d823d39ca1f3.js": "/werewolf/precache-manifest.412b7311aef8239a6f41d823d39ca1f3.js",
+    "precache-manifest.665b8cd0b7b5a31d79812a7e56275995.js": "/werewolf/precache-manifest.665b8cd0b7b5a31d79812a7e56275995.js",
     "service-worker.js": "/werewolf/service-worker.js",
     "static/css/main.7eac0109.chunk.css.map": "/werewolf/static/css/main.7eac0109.chunk.css.map",
     "static/media/day_break.mp3": "/werewolf/static/media/day_break.a7d9ef5f.mp3",
