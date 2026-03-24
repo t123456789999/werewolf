@@ -708,6 +708,7 @@ const Game = (props) => {
           death_list.push(predictorPlayer);
         }
         current_has_retaliated = true;
+        retaliated_tonight = true;
       }
       // 預言家查驗不影響生存
     }
