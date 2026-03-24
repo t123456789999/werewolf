@@ -690,9 +690,8 @@ const Game = (props) => {
           }
           current_has_retaliated = true;
           retaliated_tonight = true;
-          setHasRetaliated(true);
         }
-        // 惡靈騎士被毒不會死，所以不加入 death_list
+        // 惡靈騎士被毒不會死 (永久免疫)，所以不加入 death_list
       } else {
         if (!death_list.some(p => p.index === witchDeadNumber.index)) {
           death_list.push(witchDeadNumber);
@@ -709,9 +708,13 @@ const Game = (props) => {
           death_list.push(predictorPlayer);
         }
         current_has_retaliated = true;
-        setHasRetaliated(true);
       }
       // 預言家查驗不影響生存
+    }
+
+    // 更新反傷狀態 (如果今晚有觸發且原本是 false)
+    if (current_has_retaliated && !hasRetaliated) {
+      setHasRetaliated(true);
     }
 
     // Priority 3: Wolf Kill
