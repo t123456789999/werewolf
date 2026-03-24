@@ -3,6 +3,7 @@
 This project refers to [狼人殺法官](https://github.com/JaeyoLin/wolf_judge)
 
 v2.0: 新增守衛和狼王角色牌以及優化整體 UI/UX
+v2.1: 新增惡靈騎士角色牌以及優化 UI/UX
 
 ## 網頁
 
