@@ -681,17 +681,16 @@ const Game = (props) => {
 
     // Priority 1: Witch's Poison
     if (witchDeadNumber !== null) {
-      if (witchDeadNumber.role.key === GHOST_WEREWOLF.key) {
+      if (witchDeadNumber.role.key === 'ghost_wolf') {
         if (!current_has_retaliated) {
           // 觸發反傷
-          const witchPlayer = list.find(p => p.role.key === WITCH.key);
+          const witchPlayer = list.find(p => p.role.key === 'witch');
           if (witchPlayer && !death_list.some(p => p.index === witchPlayer.index)) {
             death_list.push(witchPlayer);
           }
           current_has_retaliated = true;
           retaliated_tonight = true;
         }
-        // 惡靈騎士被毒不會死 (永久免疫)，所以不加入 death_list
       } else {
         if (!death_list.some(p => p.index === witchDeadNumber.index)) {
           death_list.push(witchDeadNumber);
@@ -700,33 +699,29 @@ const Game = (props) => {
     }
 
     // Priority 2: Seer's Investigation
-    if (predictorSelect !== null && predictorSelect.role.key === GHOST_WEREWOLF.key) {
+    if (predictorSelect !== null && predictorSelect.role.key === 'ghost_wolf') {
       if (!current_has_retaliated && !retaliated_tonight) {
         // 觸發反傷
-        const predictorPlayer = list.find(p => p.role.key === PREDICTOR.key);
+        const predictorPlayer = list.find(p => p.role.key === 'predictor');
         if (predictorPlayer && !death_list.some(p => p.index === predictorPlayer.index)) {
           death_list.push(predictorPlayer);
         }
         current_has_retaliated = true;
         retaliated_tonight = true;
       }
-      // 預言家查驗不影響生存
     }
 
     // Priority 3: Wolf Kill
     if (deadNumber !== null) {
-      // 惡靈騎士不能被狼人殺死 (永久免疫)
-      if (deadNumber.role.key !== GHOST_WEREWOLF.key) {
+      if (deadNumber.role.key !== 'ghost_wolf') {
         const isProtected = guardProtect && guardProtect.index === deadNumber.index;
         const isSaved = isUseSaveTonight;
 
         if (isProtected && isSaved) {
-          // 同守同救 = 死亡
           if (!death_list.some(p => p.index === deadNumber.index)) {
             death_list.push(deadNumber);
           }
         } else if (!isProtected && !isSaved) {
-          // 沒守沒救 = 死亡
           if (!death_list.some(p => p.index === deadNumber.index)) {
             death_list.push(deadNumber);
           }
@@ -745,14 +740,20 @@ const Game = (props) => {
    * 組出當晚死亡訊息
    * 
    */
-  const generateResultMessage = (nightlyDead = []) => {
+  const generateResultMessage = (nightlyDead) => {
     let returnMessage = '';
+    let targetList = nightlyDead;
 
-    if (nightlyDead.length === 0) {
+    // 如果沒有傳入參數（通常是在 UI render 時），則即時計算
+    if (!targetList) {
+      targetList = resolve_night_actions().death_list;
+    }
+
+    if (targetList.length === 0) {
       returnMessage = t('christmas_eve');
       return returnMessage;
     } else {
-      let tmp = nightlyDead.map(p => p.index);
+      let tmp = targetList.map(p => p.index);
 
       // 重新排序
       tmp.sort((a, b) => {
@@ -1785,26 +1786,11 @@ const Game = (props) => {
             <div style={{ transform: 'rotate(180deg)', borderTop: '1px solid #e0e0e0' }}>
               <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('yesterday_dead')}</DialogTitle>
               <DialogContent>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={isShowMessage} 
-                      onChange={(e) => {
-                        setIsShowMessage(e.target.checked);
-                      }}
-                    />
-                  }
-                  label={t('is_show_message')}
-                />
-                {
-                  (isShowMessage) && (
-                    <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
-                      <span className={classes.bad}>
-                        { generateResultMessage() }
-                      </span>
-                    </DialogContentText>
-                  )
-                }
+                <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
+                  <span className={classes.bad}>
+                    { generateResultMessage() }
+                  </span>
+                </DialogContentText>
               </DialogContent>
               <DialogActions>
                 <Button onClick={handleCloseResult} color="primary" variant="contained">
@@ -1818,26 +1804,11 @@ const Game = (props) => {
         <div>
           <DialogTitle id="alert-dialog-title" className={classes.dialogTitle}>{t('yesterday_dead')}</DialogTitle>
           <DialogContent>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={isShowMessage} 
-                  onChange={(e) => {
-                    setIsShowMessage(e.target.checked);
-                  }}
-                />
-              }
-              label={t('is_show_message')}
-            />
-            {
-              (isShowMessage) && (
-                <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
-                  <span className={classes.bad}>
-                    { generateResultMessage() }
-                  </span>
-                </DialogContentText>
-              )
-            }
+            <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
+              <span className={classes.bad}>
+                { generateResultMessage() }
+              </span>
+            </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseResult} color="primary" variant="contained">
