@@ -712,14 +712,9 @@ const Game = (props) => {
       // 預言家查驗不影響生存
     }
 
-    // 更新反傷狀態 (如果今晚有觸發且原本是 false)
-    if (current_has_retaliated && !hasRetaliated) {
-      setHasRetaliated(true);
-    }
-
     // Priority 3: Wolf Kill
     if (deadNumber !== null) {
-      // 惡靈騎士不能被狼人殺死
+      // 惡靈騎士不能被狼人殺死 (永久免疫)
       if (deadNumber.role.key !== GHOST_WEREWOLF.key) {
         const isProtected = guardProtect && guardProtect.index === deadNumber.index;
         const isSaved = isUseSaveTonight;
@@ -738,7 +733,10 @@ const Game = (props) => {
       }
     }
 
-    return death_list;
+    return {
+      death_list,
+      has_new_retaliation: current_has_retaliated && !hasRetaliated
+    };
   }
 
   /**
@@ -746,7 +744,7 @@ const Game = (props) => {
    * 組出當晚死亡訊息
    * 
    */
-  const generateResultMessage = (nightlyDead) => {
+  const generateResultMessage = (nightlyDead = []) => {
     let returnMessage = '';
 
     if (nightlyDead.length === 0) {
@@ -784,7 +782,11 @@ const Game = (props) => {
     setIsOpenResult(false);
     
     // 取得當晚真正死亡的人
-    const nightlyDead = resolve_night_actions();
+    const { death_list: nightlyDead, has_new_retaliation } = resolve_night_actions();
+
+    if (has_new_retaliation) {
+      setHasRetaliated(true);
+    }
 
     // 更新遊戲訊息
     setMessages([
