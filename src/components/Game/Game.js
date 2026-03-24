@@ -37,6 +37,7 @@ import {
   GUARD,
   WOLF_KING,
   GHOST_WEREWOLF,
+  HIDDEN_WOLF,
 } from '../../constants/Role';
 
 import night_start from '../../static/audio/night_start.mp3'; // 天黑請閉眼
@@ -249,6 +250,7 @@ const Game = (props) => {
     isMirror,
     isUseGuard, // 假設外部會傳入是否使用守衛
     isUseWolfKing,
+    isUseHiddenWolf,
   } = props;
 
   if (IS_DEBUG) {
@@ -1072,34 +1074,78 @@ const Game = (props) => {
 
     // 2. 統計人數
     let deadWolf = 0;
+    let otherWolvesDead = true;
+    let hiddenWolfPlayer = null;
+
     dead.forEach((p) => {
-      // 狼王, 惡靈騎士與普通狼人皆計入狼人陣營
-      if (p.role.key === WOLF.key || p.role.key === WOLF_KING.key || p.role.key === GHOST_WEREWOLF.key) {
+      // 狼王, 惡靈騎士, 隱狼與普通狼人皆計入狼人陣營
+      if (p.role.key === WOLF.key || p.role.key === WOLF_KING.key || p.role.key === GHOST_WEREWOLF.key || p.role.key === HIDDEN_WOLF.key) {
         deadWolf += 1;
       }
     });
 
-    const aliveWolves = wolfNumber - deadWolf;
+    // 檢查隱狼以外的狼人是否全滅
+    list.forEach((p) => {
+      const isOtherWolf = (p.role.key === WOLF.key || p.role.key === WOLF_KING.key || p.role.key === GHOST_WEREWOLF.key);
+      const isHiddenWolf = (p.role.key === HIDDEN_WOLF.key);
+      const isDead = dead.some(d => d.index === p.index);
+
+      if (isOtherWolf && !isDead) {
+        otherWolvesDead = false;
+      }
+      if (isHiddenWolf && !isDead) {
+        hiddenWolfPlayer = p;
+      }
+    });
+
+    // 隱狼連帶死亡邏輯：若隱狼還活著但其他狼全滅
+    if (hiddenWolfPlayer && otherWolvesDead) {
+      dead.push(hiddenWolfPlayer);
+      deadWolf += 1;
+      setDead([...dead]);
+      setMessages([
+        ...messages,
+        `${t(HIDDEN_WOLF.key)} (${hiddenWolfPlayer.index}) 因失去生存連結出局`
+      ]);
+    }
+
+    const aliveWolvesCount = wolfNumber - deadWolf;
     const totalAlive = playerNumber - dead.length;
-    const aliveGoodGuys = totalAlive - aliveWolves;
+    // 隱狼在計算陣營平衡時被視為好人 (Counted as good for parity/bad win check)
+    let aliveGoodGuys = 0;
+    list.forEach(p => {
+      const isDead = dead.some(d => d.index === p.index);
+      if (!isDead) {
+        // 如果是好人，或者是隱狼 (機制要求計算提早結束時隱狼計入好人)
+        if (p.role.isGood || p.role.key === HIDDEN_WOLF.key) {
+          aliveGoodGuys++;
+        }
+      }
+    });
 
     if (IS_DEBUG) {
       console.log('--- Win Check ---');
-      console.log('Alive Wolves:', aliveWolves);
-      console.log('Alive Good Guys:', aliveGoodGuys);
+      console.log('Alive Wolves (Incl. Hidden):', aliveWolvesCount);
+      console.log('Alive Good Guys (Incl. Hidden):', aliveGoodGuys);
       console.log('Total Alive:', totalAlive);
     }
 
-    // 3. 判斷好人是否獲勝：所有狼人陣營（含狼王）皆死亡
-    if (aliveWolves === 0) {
+    // 3. 判斷好人是否獲勝：所有狼人陣營皆死亡
+    if (aliveWolvesCount === 0) {
       return {
         isFinished: true,
         message: t('good_win'),
       }
     }
 
-    // 4. 判斷壞人是否獲勝：當女巫毒藥已經使用、女巫死亡或是場上沒有守衛、守衛死亡，狼人數量>=好人數量，邪惡陣營獲勝
-    if ((isWitchDead || isUsePoison || !isUseGuard || isGuardDead) && aliveWolves >= aliveGoodGuys) {
+    // 4. 判斷壞人是否獲勝：狼人數量 (不含隱狼) >= 好人數量 (含隱狼)
+    // 注意：根據需求「計算提早結束遊戲條件: the Hidden Wolf is counted as good, not a werewolf」
+    const realWolvesAlive = list.filter(p => 
+      (p.role.key === WOLF.key || p.role.key === WOLF_KING.key || p.role.key === GHOST_WEREWOLF.key) && 
+      !dead.some(d => d.index === p.index)
+    ).length;
+
+    if ((isWitchDead || isUsePoison || !isUseGuard || isGuardDead) && realWolvesAlive >= aliveGoodGuys) {
       return {
         isFinished: true,
         message: t('bad_win'),
@@ -1358,7 +1404,7 @@ const Game = (props) => {
     setIsUseKnightSkill(true);
     setIsOpenKnightResult(false);
     let tmpDead = [];
-    const isHitWolf = knightSelect !== null && (knightSelect.role.key === WOLF.key || knightSelect.role.key === WOLF_KING.key || knightSelect.role.key === GHOST_WEREWOLF.key);
+    const isHitWolf = knightSelect !== null && (knightSelect.role.key === WOLF.key || knightSelect.role.key === WOLF_KING.key || knightSelect.role.key === GHOST_WEREWOLF.key || knightSelect.role.key === HIDDEN_WOLF.key);
 
     if (isHitWolf) {
       tmpDead = [
@@ -2205,7 +2251,7 @@ const Game = (props) => {
                 <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
                   {
                     (knightSelect !== null) ? (
-                      (knightSelect.role.key === WOLF.key || knightSelect.role.key === WOLF_KING.key || knightSelect.role.key === GHOST_WEREWOLF.key) ? (
+                      (knightSelect.role.key === WOLF.key || knightSelect.role.key === WOLF_KING.key || knightSelect.role.key === GHOST_WEREWOLF.key || knightSelect.role.key === HIDDEN_WOLF.key) ? (
                         <span className={classes.bad}>{t('no_is_wolf', { index: knightSelect.index })}</span>
                       ) : (
                         <span className={classes.good}>{t('no_is_not_wolf', { index: knightSelect.index })}</span>
@@ -2231,7 +2277,7 @@ const Game = (props) => {
             <DialogContentText id="alert-dialog-description" className={classes.dialogContentText}>
               {
                 (knightSelect !== null) ? (
-                  (knightSelect.role.key === WOLF.key || knightSelect.role.key === WOLF_KING.key || knightSelect.role.key === GHOST_WEREWOLF.key) ? (
+                  (knightSelect.role.key === WOLF.key || knightSelect.role.key === WOLF_KING.key || knightSelect.role.key === GHOST_WEREWOLF.key || knightSelect.role.key === HIDDEN_WOLF.key) ? (
                     <span className={classes.bad}>{t('no_is_wolf', { index: knightSelect.index })}</span>
                   ) : (
                     <span className={classes.good}>{t('no_is_not_wolf', { index: knightSelect.index })}</span>

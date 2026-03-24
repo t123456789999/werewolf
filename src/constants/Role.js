@@ -67,3 +67,10 @@ export const GHOST_WEREWOLF = {
   isGod: true, // Special wolf
   src: 'ghost_wolf.png',
 };
+
+export const HIDDEN_WOLF = {
+  key: 'hidden_wolf',
+  isGood: true, // Detected as good by Seer
+  isGod: false,
+  src: 'hidden_wolf.png',
+};

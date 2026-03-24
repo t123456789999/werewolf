@@ -101,6 +101,7 @@ const Home = (props) => {
   const [isUseGuard, setIsUseGuard] = useState(false);
   const [isUseWolfKing, setIsUseWolfKing] = useState(true);
   const [isUseGhostWolf, setIsUseGhostWolf] = useState(false);
+  const [isUseHiddenWolf, setIsUseHiddenWolf] = useState(false);
   const [isKillKind, setIsKillKind] = useState(false); // 屠邊局判斷
   const [isMirror, setIsMirror] = useState(true); // modal 是否開啟鏡像
 
@@ -168,8 +169,32 @@ const Home = (props) => {
       };
     }
 
+    // 隱狼位置
+    if (isUseHiddenWolf) {
+      let index = null;
+
+      beginning: while(true) {
+        index = getRaddomIndex();
+        if(list[index] !== null) {
+          continue beginning;
+        } else {
+          break;
+        }
+      }
+
+      list[index] = {
+        index: index + 1,
+        role: HIDDEN_WOLF,
+      };
+    }
+
     // 狼人位置
-    for (let i = 0 ; i < (isUseWolfKing ? (isUseGhostWolf ? wolfNumber - 2 : wolfNumber - 1) : (isUseGhostWolf ? wolfNumber - 1 : wolfNumber)) ; i += 1) {
+    let specialWolves = 0;
+    if (isUseWolfKing) specialWolves++;
+    if (isUseGhostWolf) specialWolves++;
+    if (isUseHiddenWolf) specialWolves++;
+
+    for (let i = 0 ; i < (wolfNumber - specialWolves) ; i += 1) {
       let index = null;
 
       beginning: while(true) {
@@ -397,6 +422,8 @@ const Home = (props) => {
                 setIsUseWolfKing={setIsUseWolfKing}
                 isUseGhostWolf={isUseGhostWolf}
                 setIsUseGhostWolf={setIsUseGhostWolf}
+                isUseHiddenWolf={isUseHiddenWolf}
+                setIsUseHiddenWolf={setIsUseHiddenWolf}
                 isMirror={isMirror}
                 setIsMirror={setIsMirror}
               />
@@ -427,6 +454,7 @@ const Home = (props) => {
                 isUseGuard={isUseGuard}
                 isUseWolfKing={isUseWolfKing}
                 isUseGhostWolf={isUseGhostWolf}
+                isUseHiddenWolf={isUseHiddenWolf}
                 isMirror={isMirror}
               />
             )
