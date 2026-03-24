@@ -313,7 +313,6 @@ const Game = (props) => {
 
   const [isShowMessage, setIsShowMessage] = useState(false); // 是否顯示夜晚訊息
   const [hasRetaliated, setHasRetaliated] = useState(false); // 惡靈騎士是否已發動過反傷
-  const [retaliatedPlayer, setRetaliatedPlayer] = useState(null); // 被反傷的對象 (預言家或女巫)
 
   // console.log('isKillByWitch', isKillByWitch);
   // console.log('isUsePoison', isUsePoison);
@@ -535,24 +534,13 @@ const Game = (props) => {
       }, 500);
     }
 
-    if (!isPoison) {
-      setWitchDeadNumber(null);
-    } else {
-      // 使用毒藥, 判斷是不是毒到惡靈騎士
-      if (witchDeadNumber !== null && witchDeadNumber.role.key === GHOST_WEREWOLF.key) {
-        if (!hasRetaliated) {
-          setHasRetaliated(true);
-          const witchPlayer = list.find(p => p.role.key === WITCH.key);
-          setRetaliatedPlayer(witchPlayer);
-        }
-        // 惡靈騎士被毒不會死
-        setWitchDeadNumber(null);
-      } else {
-        // 使用毒藥, 判斷是不是毒到獵人或狼王
-        if (witchDeadNumber !== null && (witchDeadNumber.role.key === HUNTER.key || witchDeadNumber.role.key === WOLF_KING.key)) {
-          setIsKillByWitch(true);
-        }
+    if (isPoison) {
+      // 使用毒藥, 判斷是不是毒到獵人或狼王
+      if (witchDeadNumber !== null && (witchDeadNumber.role.key === HUNTER.key || witchDeadNumber.role.key === WOLF_KING.key)) {
+        setIsKillByWitch(true);
       }
+    } else {
+      setWitchDeadNumber(null);
     }
   }
 
@@ -575,15 +563,6 @@ const Game = (props) => {
   const handleCloseCheckRole = () => {
     setIsOpenRols(false);
     setStep(15);
-
-    // 查驗惡靈騎士觸發反傷
-    if (predictorSelect && predictorSelect.role.key === GHOST_WEREWOLF.key) {
-      if (!hasRetaliated) {
-        setHasRetaliated(true);
-        const predictorPlayer = list.find(p => p.role.key === PREDICTOR.key);
-        setRetaliatedPlayer(predictorPlayer);
-      }
-    }
   }
 
   /**
@@ -691,13 +670,81 @@ const Game = (props) => {
   }, [step]);
 
   /**
+   * resolve_night_actions
+   * 處理夜晚所有行動結果 (嚴格執行 Witch -> Seer 優先權)
+   * 
+   */
+  const resolve_night_actions = () => {
+    const death_list = [];
+    let current_has_retaliated = hasRetaliated;
+    let retaliated_tonight = false;
+
+    // Priority 1: Witch's Poison
+    if (witchDeadNumber !== null) {
+      if (witchDeadNumber.role.key === GHOST_WEREWOLF.key) {
+        if (!current_has_retaliated) {
+          // 觸發反傷
+          const witchPlayer = list.find(p => p.role.key === WITCH.key);
+          if (witchPlayer && !death_list.some(p => p.index === witchPlayer.index)) {
+            death_list.push(witchPlayer);
+          }
+          current_has_retaliated = true;
+          retaliated_tonight = true;
+          setHasRetaliated(true);
+        }
+        // 惡靈騎士被毒不會死，所以不加入 death_list
+      } else {
+        if (!death_list.some(p => p.index === witchDeadNumber.index)) {
+          death_list.push(witchDeadNumber);
+        }
+      }
+    }
+
+    // Priority 2: Seer's Investigation
+    if (predictorSelect !== null && predictorSelect.role.key === GHOST_WEREWOLF.key) {
+      if (!current_has_retaliated && !retaliated_tonight) {
+        // 觸發反傷
+        const predictorPlayer = list.find(p => p.role.key === PREDICTOR.key);
+        if (predictorPlayer && !death_list.some(p => p.index === predictorPlayer.index)) {
+          death_list.push(predictorPlayer);
+        }
+        current_has_retaliated = true;
+        setHasRetaliated(true);
+      }
+      // 預言家查驗不影響生存
+    }
+
+    // Priority 3: Wolf Kill
+    if (deadNumber !== null) {
+      // 惡靈騎士不能被狼人殺死
+      if (deadNumber.role.key !== GHOST_WEREWOLF.key) {
+        const isProtected = guardProtect && guardProtect.index === deadNumber.index;
+        const isSaved = isUseSaveTonight;
+
+        if (isProtected && isSaved) {
+          // 同守同救 = 死亡
+          if (!death_list.some(p => p.index === deadNumber.index)) {
+            death_list.push(deadNumber);
+          }
+        } else if (!isProtected && !isSaved) {
+          // 沒守沒救 = 死亡
+          if (!death_list.some(p => p.index === deadNumber.index)) {
+            death_list.push(deadNumber);
+          }
+        }
+      }
+    }
+
+    return death_list;
+  }
+
+  /**
    * generateResultMessage
    * 組出當晚死亡訊息
    * 
    */
-  const generateResultMessage = () => {
+  const generateResultMessage = (nightlyDead) => {
     let returnMessage = '';
-    const nightlyDead = getNightlyDead();
 
     if (nightlyDead.length === 0) {
       returnMessage = t('christmas_eve');
@@ -710,7 +757,7 @@ const Game = (props) => {
         return a - b;
       });
       
-      // 每晚最多只會有兩位玩家死掉
+      // 顯示死亡號碼
       tmp.forEach((number, index) => {
         returnMessage += number;
         if (tmp.length >= 2 && index !== tmp.length - 1) {
@@ -723,48 +770,6 @@ const Game = (props) => {
   }
 
   /**
-   * getNightlyDead
-   * 取得當晚真正死亡的人 (考慮守衛, 女巫)
-   */
-  const getNightlyDead = () => {
-    const nightlyDead = [];
-
-    // 狼人殺的人
-    if (deadNumber !== null) {
-      // 惡靈騎士不能被狼人殺死
-      if (deadNumber.role.key !== GHOST_WEREWOLF.key) {
-        const isProtected = guardProtect && guardProtect.index === deadNumber.index;
-        const isSaved = isUseSaveTonight;
-
-        if (isProtected && isSaved) {
-          // 同守同救 = 死亡
-          nightlyDead.push(deadNumber);
-        } else if (!isProtected && !isSaved) {
-          // 沒守沒救 = 死亡
-          nightlyDead.push(deadNumber);
-        }
-      }
-    }
-
-    // 女巫毒的人 (惡靈騎士被毒不會死，邏輯已在 handleWitchPoison 處理)
-    if (witchDeadNumber !== null) {
-      // 檢查是否跟狼人殺的是同一個，避免重複加入
-      if (!nightlyDead.some(p => p.index === witchDeadNumber.index)) {
-        nightlyDead.push(witchDeadNumber);
-      }
-    }
-
-    // 惡靈騎士反傷的人
-    if (retaliatedPlayer !== null) {
-      if (!nightlyDead.some(p => p.index === retaliatedPlayer.index)) {
-        nightlyDead.push(retaliatedPlayer);
-      }
-    }
-
-    return nightlyDead;
-  }
-
-  /**
    * handleCloseResult
    * 關閉晚上結果
    * 判斷是否結束遊戲
@@ -772,19 +777,16 @@ const Game = (props) => {
    * 
    */
   const handleCloseResult = () => {
-    // 設定成白天
-    // setDayType(DAY_TYPE.DAY);
-
     // 關閉晚上結果
     setIsOpenResult(false);
     
     // 取得當晚真正死亡的人
-    const nightlyDead = getNightlyDead();
+    const nightlyDead = resolve_night_actions();
 
     // 更新遊戲訊息
     setMessages([
       ...messages,
-      `${t('n_night', { day })}${generateResultMessage()}`
+      `${t('n_night', { day })}${generateResultMessage(nightlyDead)}`
     ]);
 
     // 更新已死亡的人
